@@ -1,0 +1,30 @@
+#notifications {
+    top: 2%;
+    left: 0;
+    right: 0;
+    position: absolute;
+
+}
+
+.notification {
+    font-size: 1.1em;
+    color: #ffffff;
+    display: none;
+    text-align: center;
+}
+
+.notification>span {
+    display: inline-block;
+    padding:  0.5em 2em 0.5em 2em;
+    border-radius: 10px;
+}
+
+#loadingBox>span {
+    background: #7CB3E9;
+}
+#infoBox>span {
+    background: #393;
+}
+#errorBox>span {
+    background: #F50;
+}

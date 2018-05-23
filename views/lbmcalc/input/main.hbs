@@ -1,0 +1,103 @@
+{{> header}}
+
+<div class="container-fluid z-depth-5" id="main">
+    <div class="col-sm-6 col-md-4 col-md-offset-4" id="right">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Welcome: {{formatName trainer}}</strong>
+            </div>
+            <div class="panel-body">
+                <form action="#/populate" method="get" id="inputForm" class="form-group" role="form">
+                    <fieldset>
+                        <div class="row">
+                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                <div class="form-group">
+                                    <div class="input-group">
+                                <span class="input-group-addon">
+                                    <i class="glyphicon glyphicon-search"></i>
+                                </span>
+                                        <a href="#/filter">
+                                            <label for="search"></label>
+                                            <input type="search" class="form-control" id="search" name="search"
+                                                   autofocus placeholder="Search/Add" autocomplete="off"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                            </span>
+                                            <label for="client"></label>
+                                            <select class="form-control" id="client" name="client">
+                                                <option value="client" class="default-search" selected>Client</option>
+                                                {{#each clients}}
+                                                    {{> client}}
+                                                {{/each}}
+                                            </select>
+                                            <!--<span class="input-group-addon">
+                                                <a href="#/delete/client/{{_id}}"><i class="glyphicon glyphicon-remove"></i></a>
+                                            </span>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <!--<div class="input-group">-->
+                                    <button type="submit" id="btnInfo" class="btn btn-primary btn-block"><i
+                                            class="fa fa-info"
+                                            aria-hidden="true"></i>
+                                        Show
+                                    </button>
+                                    <!--</div>-->
+                                </div>
+                                <hr>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-10" id="sex">
+                                            {{> sex}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="row">
+                                        <div class="col-sm-12 col-md-10" id="height">
+                                            {{> height}}
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group" id="circumference">
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-8" id="wrist">
+                                                {{> wrist}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="row">
+                                            <div class="col-sm-12 col-md-8" id="ankle">
+                                                {{> ankle}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="panel-footer text-center">
+                <a href="#/lbm">
+                    <button type="button" id="btnReset" class="btn btn-default"><i class="glyphicon glyphicon-home"></i>
+                        Reset
+                    </button>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div id="left"></div>
+</div>
+
+
+{{> footer}}

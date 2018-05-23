@@ -1,0 +1,100 @@
+{{> header}}
+
+<div class="container" id="add-client">
+    <div class="col-lg-6 col-lg-offset-3">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Welcome: {{formatName trainer}}</strong>
+            </div>
+            <div class="panel-body" >
+                <div class="row">
+                    <form action="#/client" method="post">
+                        <div class="col-sm-12" id="add-client-form">
+                            <div class="row">
+                                <div class="col-sm-8 form-group">
+                                    <label>Full Name</label>
+                                    {{> name}}
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Sex</label>
+                                    {{> sexRegister}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Height</label>
+                                    {{> heightRegister}}
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Wrist Girth</label>
+                                    {{> wristRegister}}
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Ankle Girth</label>
+                                    {{> ankleRegister}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Born</label>
+                                    {{> birthDate}}
+                                </div>
+                                <div class="col-sm-8 form-group">
+                                    <label>Phone Number</label>
+                                    {{> phone}}
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label>Email</label>
+                                    {{> email}}
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label>Trainer</label>
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                            </span>
+                                            <label for="trainers"></label>
+                                            <select class="form-control" id="trainers" name="trainers">
+                                                {{#each trainers}}
+                                                    {{> trainer}}
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Discount</label>
+                                    {{> discount}}
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label>Active</label>
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" id="active" name="check" checked><span class="label-text"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="text-reg" placeholder="Additional client information...."
+                                          class="form-control"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block"><i
+                                    class="glyphicon glyphicon-floppy-save"></i> SAVE
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{{> footer}}

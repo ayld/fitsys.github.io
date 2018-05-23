@@ -1,0 +1,52 @@
+$(() => {
+    const app = Sammy('.container', function () {
+        this.use('Handlebars', 'hbs');
+
+        this.get('index.html', homeController.displayHome);
+        //this.get('#/home', homeController.displayHome);
+        this.get('#/home', homeController.displayHome);
+
+        this.get('#/register', userController.handleRegisterGet);
+        this.post('#/register', userController.handleRegisterPost);
+
+        this.get('#/login', userController.handleLoginGet);
+        this.post('#/login', userController.handleLoginPost);
+
+        this.get('#/logout', userController.handleLogout);
+
+        this.get('#/lbm', clientController.listAllClients);
+
+        this.get('#/populate', clientController.populateFields);
+
+        this.get('#/client', clientController.registerClientGet);
+        this.post('#/client', clientController.registerClientPost);
+
+        this.get('#/card', clientController.addClientCardGet);
+        this.post('#/card', clientController.addClientCardPost);
+
+        this.get('#/accounting', clientController.getClientsCards);
+
+        this.get('#/filter', function () {
+            $('#search').on('input', clientController.filterClient);
+        });
+
+        this.get('#/sexLBM', function () {
+            $('#sex-select').on('change keyup', lbmController.doLbm);
+        });
+        this.get('#/heightLBM', function () {
+            $('#height-select').on('change keyup', lbmController.doLbm);
+        });
+        this.get('#/wristLBM', function () {
+            $('#wrist-select').on('change keyup', lbmController.doLbm);
+        });
+        this.get('#/ankleLBM', function () {
+            $('#ankle-select').on('change keyup', lbmController.doLbm);
+        });
+        this.get('#/fatLbm', function () {
+            $('#fat-select').on('change keyup', lbmController.doLbm)
+        });
+    });
+
+    app.run();
+});
+

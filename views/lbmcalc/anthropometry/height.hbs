@@ -1,0 +1,28 @@
+<div class="dropdown">
+    <div class="input-group">
+        <span class="input-group-addon">
+            <i class="glyphicon glyphicon-option-vertical"></i>
+        </span>
+        <a href="#/heightLBM">
+            <label for="height-select"></label>
+            <select class="form-control"
+                    onchange="viewController.displayCard()"
+                    onkeyup="viewController.displayCard()"
+                    name="height-select"
+                    id="height-select">
+                <script>
+                    (() =>{
+                        let selector = document.getElementById('height-select');
+                        let option = document.createElement('option');
+                        option.innerHTML = 'Height';
+                        option.value = 0;
+                        selector.appendChild(option);
+                        for (let i = 140; i <= 220; i++) {
+                            selector.options[selector.options.length] = new Option(i, i);
+                        }
+                    })()
+                </script>
+            </select>
+        </a>
+    </div>
+</div>

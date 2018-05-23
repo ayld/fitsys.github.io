@@ -1,0 +1,47 @@
+{{> header}}
+
+<div class="container-fluid" id="accounting">
+    <h3>Welcome: {{formatName trainer}}</h3>
+
+    <table data-toggle="table" class="table table-bordered table-responsive" id="clients-cards">
+        {{#if isEmpty}}
+            <thead>
+            <tr>
+                <th>&#35; Day</th>
+                <th>Name</th>
+                <th>Card</th>
+                <th>Zone</th>
+                <th>Price</th>
+                <th>Payment</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Duration</th>
+            </tr>
+            </thead>
+        {{else}}
+            <thead>
+            <tr>
+                <th>&#35; Day</th>
+                <th>Name</th>
+                <th>Card</th>
+                <th>Zone</th>
+                <th>Price</th>
+                <th>Payment</th>
+                <th>Start Date</th>
+                <th>End Date</th>
+                <th>Duration</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each cards}}
+                {{> clientReg}}
+            {{else}}
+                No clients in database.
+            {{/each}}
+            </tbody>
+        </table>
+        {{/if}}
+
+</div>
+
+{{> footer}}

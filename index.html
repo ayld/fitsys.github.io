@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LBM Calc</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style/accounting.css">
+    <link rel="stylesheet" type="text/css" href="style/lbm.css"/>
+    <link rel="stylesheet" type="text/css" href="style/notifications.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <script src="./node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules/handlebars/dist/handlebars.min.js"></script>
+    <script src="./node_modules/sammy/lib/min/sammy-0.7.6.min.js"></script>
+    <script src="./node_modules/sammy/lib/min/plugins/sammy.handlebars-0.7.6.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="scripts/controller/viewController.js"></script>
+    <script src="scripts/controller/clientController.js"></script>
+    <script src="scripts/controller/homeController.js"></script>
+    <script src="scripts/controller/lbmController.js"></script>
+    <script src="scripts/controller/userController.js"></script>
+    <script src="scripts/helpers/lbmHelper.js"></script>
+    <script src="scripts/helpers/infoHelper.js"></script>
+    <script src="scripts/helpers/registerHelper.js"></script>
+    <script src="scripts/model/lbmModel.js"></script>
+    <script src="scripts/service/authService.js"></script>
+    <script src="scripts/service/clientService.js"></script>
+    <script src="scripts/service/lbmService.js"></script>
+    <script src="scripts/service/notifyService.js"></script>
+    <script src="scripts/service/remoteService.js"></script>
+    <script src="scripts/service/userService.js"></script>
+    <script src="scripts/app.js"></script>
+</head>
+<body>
+<div class="container"></div>
+<div id="notifications">
+    <!--<div id="loadingBox" class="notification">
+        <span>Loading …</span>
+    </div>-->
+    <div id="infoBox" class="notification">
+        <span>Info</span>
+    </div>
+    <div id="errorBox" class="notification">
+        <span>Error</span>
+    </div>
+</div>
+</body>
+</html>

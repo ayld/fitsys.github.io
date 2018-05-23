@@ -1,0 +1,20 @@
+<div class="input-group">
+    <span class="input-group-addon">
+        <i class="glyphicon glyphicon-option-vertical"></i>
+    </span>
+    <label for="ankle-reg"></label>
+    <select class="form-control" name="ankle-reg" id="ankle-reg">
+        <script>
+            (() =>{
+                let selector = document.getElementById('ankle-reg');
+                let option = document.createElement('option');
+                option.innerHTML = 'cm';
+                option.value = 0;
+                selector.appendChild(option);
+                for (let i = 15; i <= 40; i+=0.5) {
+                    selector.options[selector.options.length] = new Option(i, i);
+                }
+            })()
+        </script>
+    </select>
+</div>
