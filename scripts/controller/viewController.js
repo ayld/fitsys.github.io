@@ -67,16 +67,18 @@ let viewController = (() => {
         }
     }
 
-    function navActive() {
-        $('.nav.nav-tabs > li').on('click', function () {
-            $('.nav.nav-tabs > li').removeClass('active');
+    async function navActive() {
+        await $('.nav li').on('click', function () {
+            $('.nav li').removeClass('active');
             $(this).addClass('active');
         })
     }
 
     function dateOptionValues() {
         $(document).ready(function () {
-            let selector = document.getElementById('today');
+            let selector = document.createElement('select');
+            selector.id = 'today-select';
+            selector.name = 'today-select';
             for (let i = 1; i <= 31; i++) {
                 selector.options[selector.options.length] = new Option(i, i);
             }
@@ -84,7 +86,7 @@ let viewController = (() => {
             let day = today.getDate();
             let month = today.getMonth();
             month = month + 1;
-            $(`#today option[value="${day}"]`).prop('selected', true);
+            $(`#today-select option[value="${day}"]`).prop('selected', true);
         })
     }
 
@@ -116,6 +118,76 @@ let viewController = (() => {
 
     }
 
+    function calcPrice() {
+        let clientId = InfoHelper.prototype.getSelectedClientId();
+
+        clientService.getClientInfoById(clientId).then((client) => {
+            let discount = client.discount;
+            let quantity = InfoHelper.prototype.getTimesPerWeek();
+            let zone = InfoHelper.prototype.getZoneValue();
+            let payment = InfoHelper.prototype.getPaymentValue();
+            let price = 185 * quantity * zone * payment * discount;
+            price = Math.round(price);
+            $('#price').val(price)
+        })
+    }
+    
+    function calcEndDate() {
+        let duration = document.getElementById('duration').value;
+        let end = new Date(InfoHelper.prototype.getStartDate());
+        end.setDate(end.getDate() + Number(duration));
+        let dd = end.getDate();
+        let mm = end.getMonth() + 1;
+        let yyyy = end.getFullYear();
+
+        if(dd < 10) {
+            dd = '0' + dd
+        }
+
+        if(mm < 10) {
+            mm = '0' + mm
+        }
+
+        end = mm + '/' + dd + '/' + yyyy;
+
+        $('#end').val(end)
+    }
+
+    function calcPriceForEdit() {
+        let clientId = sessionStorage.getItem('clientId');
+
+        clientService.getClientInfoById(clientId).then((client) => {
+            let discount = client.discount;
+            let quantity = document.getElementById('qty-edit').value;
+            let zone = document.getElementById('zone-edit').value;
+            let payment = document.getElementById('payment-edit').value;
+            let price = 185 * quantity * zone * payment * discount;
+            price = Math.round(price);
+            $('#price-edit').val(price)
+        })
+    }
+
+    function calcEndDateForEdit() {
+        let duration = document.getElementById('duration-edit').value;
+        let end = new Date(document.getElementById('start-date-edit').value);
+        end.setDate(end.getDate() + Number(duration));
+        let dd = end.getDate();
+        let mm = end.getMonth() + 1;
+        let yyyy = end.getFullYear();
+
+        if(dd < 10) {
+            dd = '0' + dd
+        }
+
+        if(mm < 10) {
+            mm = '0' + mm
+        }
+
+        end = mm + '/' + dd + '/' + yyyy;
+
+        $('#end-date-edit').val(end)
+    }
+
     return {
         heightOptionValues,
         displayCard,
@@ -125,6 +197,10 @@ let viewController = (() => {
         navActive,
         dateOptionValues,
         displayBirthDate,
-        displayCardDate
+        displayCardDate,
+        calcPrice,
+        calcEndDate,
+        calcPriceForEdit,
+        calcEndDateForEdit
     }
 })();

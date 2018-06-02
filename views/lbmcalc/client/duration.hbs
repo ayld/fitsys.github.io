@@ -4,9 +4,9 @@
             <i class="glyphicon glyphicon-option-vertical"></i>
         </span>
         <label for="duration"></label>
-        <select class="form-control" name="duration" id="duration">
-            <option value="7" class="week" selected>5 weeks</option>
-            <option value="" class="infinity">unlimited</option>
+        <select onchange="viewController.calcEndDate()" class="form-control" name="duration" id="duration">
+            <option value="35" selected>5 weeks</option>
+            <option value="">unlimited</option>
         </select>
     </div>
 </div>

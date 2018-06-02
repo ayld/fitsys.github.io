@@ -163,10 +163,30 @@ InfoHelper.prototype.getDuration = function () {
     return $('#duration').find('option:selected').text();
 };
 
+InfoHelper.prototype.getDurationVal = function () {
+    return $('#duration').find('option:selected').val();
+};
+
 InfoHelper.prototype.getZoneValue = function () {
     return $('#zone').find('option:selected').val();
 };
 
 InfoHelper.prototype.getPaymentValue = function () {
     return $('#payment').find('option:selected').val();
+};
+
+InfoHelper.prototype.getPrice = function () {
+    return $('#price').val();
+};
+
+InfoHelper.prototype.getDiscount = function () {
+    return $('#discount').val();
+};
+
+InfoHelper.prototype.getTimesPerWeekEdit = function () {
+    return $('#qty-edit').find('option:selected').val();
+};
+
+InfoHelper.prototype.getDurationTextEdit = function () {
+    return $('#duration-edit').find('option:selected').text();
 };

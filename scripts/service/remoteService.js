@@ -29,20 +29,20 @@ let remoteService = (() => {
     // Function to return POST promise
     function post (module, endpoint, auth, data) {
         let req = makeRequest('POST', module, endpoint, auth);
-        req.data = JSON.stringify(data);
-        req.headers['Content-Type'] = 'application/json';
+        req.data = data;
+
         return $.ajax(req);
     }
 
     function update(module, endpoint, auth, data) {
-        let req = request('PUT', module, endpoint, auth);
+        let req = makeRequest('PUT', module, endpoint, auth);
         req.data = data;
 
         return $.ajax(req);
     }
 
     function remove(module, endpoint, auth) {
-        return $.ajax(request('DELETE', module, endpoint, auth));
+        return $.ajax(makeRequest('DELETE', module, endpoint, auth));
     }
 
     return {

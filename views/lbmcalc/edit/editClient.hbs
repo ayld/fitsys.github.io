@@ -1,0 +1,182 @@
+{{> header}}
+
+<div class="container" id="edit-client">
+    <div class="col-lg-6 col-lg-offset-3">
+        <h2 class="text-center">Edit {{formatName client_name}}'s personal data</h2>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <strong>Welcome: {{formatName trainer}}</strong>
+            </div>
+            <div class="panel-body" >
+                <div class="row">
+                    <form action="#/editClient/:clientId" method="post">
+                        <div class="col-sm-12" id="edit-client-form">
+                            <div class="row">
+                                <div class="col-sm-8 form-group">
+                                    <label>Full Name</label>
+                                    <label for="client-name-edit"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <input type="text" class="form-control" id="client-name-edit" value="{{formatName client_name}}">
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Sex</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                        <label for="sex-edit"></label>
+                                        <input type="text" value="{{toUpperCase sex}}" class="form-control" id="sex-edit" name="sex-edit"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Height</label>
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                            </span>
+                                            <label for="height-edit"></label>
+                                            <select class="form-control" name="height-edit" id="height-edit">
+                                                <script>
+                                                    (() =>{
+                                                        let selector = document.getElementById('height-edit');
+                                                        for (let i = {{height}}; i <= 220; i++) {
+                                                            selector.options[selector.options.length] = new Option(i, i);
+                                                        }
+                                                    })()
+                                                </script>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Wrist Girth</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-option-vertical"></i>
+                                        </span>
+                                        <label for="wrist-edit"></label>
+                                        <select class="form-control" name="wrist-edit" id="wrist-edit">
+                                            <script>
+                                                (() =>{
+                                                    let selector = document.getElementById('wrist-edit');
+                                                    for (let i = {{wrist}}; i <= 26; i+=0.5) {
+                                                        selector.options[selector.options.length] = new Option(i, i);
+                                                    }
+                                                })()
+                                            </script>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 form-group">
+                                    <label>Ankle Girth</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <i class="glyphicon glyphicon-option-vertical"></i>
+                                        </span>
+                                        <label for="ankle-edit"></label>
+                                        <select class="form-control" name="ankle-edit" id="ankle-edit">
+                                            <script>
+                                                (() =>{
+                                                    let selector = document.getElementById('ankle-edit');
+                                                    for (let i = {{ankle}}; i <= 40; i+=0.5) {
+                                                        selector.options[selector.options.length] = new Option(i, i);
+                                                    }
+                                                })()
+                                            </script>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Born</label>
+                                    <label for="date-edit"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" value="{{date}}" class="form-control" id="date-edit" name="date-edit"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-8 form-group">
+                                    <label>Phone Number</label>
+                                    <label for="phone-edit"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                        <input type="text" value="{{phone}}" class="form-control" id="phone-edit">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-6 form-group">
+                                    <label>Email</label>
+                                    <label for="email-edit"></label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+                                        <input type="text" value="{{email}}" class="form-control" id="email-edit">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label>Trainer</label>
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                            </span>
+                                            <label for="trainers"></label>
+                                            <select class="form-control" id="trainers" name="trainers">
+                                                {{#each trainers}}
+                                                    {{> trainer}}
+                                                {{/each}}
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4 form-group">
+                                    <label>Discount</label>
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                            </span>
+                                            <label for="discount-edit"></label>
+                                            <select class="form-control" name="discount-edit" id="discount-edit">
+                                                <option value="1" selected>0</option>
+                                                <option value="0.95">5%</option>
+                                                <option value="0.9">10%</option>
+                                                <option value="0.85">15%</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 form-group">
+                                </div>
+                                <div class="col-sm-6 form-group">
+                                    <label>Active</label>
+                                    <br>
+                                    <label>
+                                        <input type="checkbox" id="active-edit" name="active-edit" checked><span class="label-text"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <label for="text-edit"></label>
+                                <textarea id="text-edit" class="form-control">{{description}}</textarea>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-block"><i
+                                    class="glyphicon glyphicon-floppy-save"></i> UPDATE
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <a href="#/accounting">Cancel</a>
+        </div>
+    </div>
+</div>
+
+{{> footer}}

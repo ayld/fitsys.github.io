@@ -6,7 +6,15 @@
         <li><a href="#/endurance">Endurance</a></li>
         <li><a href="#/strength">Strength Endurance</a></li>
         <li><a href="#/client">Add Client</a></li>
-        <li><a href="#/register">Register Trainer</a></li>
         <li><a href="#/card">Add Card</a></li>
+        <li><a href="#/register">Register Trainer</a></li>
     </ul>
 </div>
+<script>
+    $(function() {
+        $('.nav li').on('click', function () {
+            $('.nav li').removeClass('active');
+            $(this).addClass('active');
+        })
+    })
+</script>

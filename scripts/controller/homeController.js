@@ -5,10 +5,9 @@ let homeController = (() => {
             ctx.isAuth = sessionStorage.getItem('authtoken');
 
             ctx.loadPartials({
-                header: './views/basic/header.hbs',
                 footer: './views/basic/footer.hbs'
             }).then(function () {
-                this.partial('./views/home/home.hbs')
+                this.partial('./views/basic/header.hbs')
             })
         } else {
             ctx.anonymous = true;

@@ -1,5 +1,5 @@
 <div class="input-group">
     <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-    <input type="text" placeholder="mm/dd/yyyy" class="form-control" id="start-date" name="start-date"/>
+    <input onchange="viewController.calcEndDate()" autocomplete="off" type="text" placeholder="mm/dd/yyyy" class="form-control" id="start-date" name="start-date"/>
     <script>viewController.displayCardDate()</script>
 </div>

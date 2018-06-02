@@ -20,3 +20,7 @@ Handlebars.registerHelper('formatName', function (name) {
         }
     }
 });
+
+Handlebars.registerHelper('multiply', function (arg) {
+    return arg * 4;
+});

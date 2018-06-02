@@ -4,11 +4,11 @@
             <i class="glyphicon glyphicon-option-vertical"></i>
         </span>
         <label for="qty"></label>
-        <select class="form-control" name="qty" id="qty">
-            <option value="0" class="default-qty" selected></option>
-            <option value="0.5" class="one">1</option>
-            <option value="1" class="two">2</option>
-            <option value="1.33" class="three">3</option>
+        <select onchange="viewController.calcPrice()" class="form-control" name="qty" id="qty">
+            <option value="0.5">1</option>
+            <option value="1" selected>2</option>
+            <option value="1.33">3</option>
+            <option value="1.58">4</option>
         </select>
     </div>
 </div>

@@ -26,6 +26,16 @@ $(() => {
 
         this.get('#/accounting', clientController.getClientsCards);
 
+        this.get('#/editCard/:cardId', clientController.updateCardGet);
+        this.post('#/editCard/:cardId', clientController.updateCardPost);
+
+        this.get('#/deleteCard/:cardId', clientController.deleteCard);
+
+        this.get('#/editClient/:clientId', clientController.updateClientGet);
+        this.post('#/editClient/:clientId', clientController.updateClientPost);
+
+        this.get('#/clientInfo/:clientId', clientController.getClientInfo);
+
         this.get('#/filter', function () {
             $('#search').on('input', clientController.filterClient);
         });
@@ -50,3 +60,4 @@ $(() => {
     app.run();
 });
 
+//zones - 1:Active; 2:Available 3:Combined
