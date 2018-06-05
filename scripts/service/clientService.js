@@ -1,84 +1,68 @@
 let clientService = (() => {
     function getClients() {
-        const endpoint = 'clients?query={}&sort={"name": 1}';
+      const endpoint = 'clients?query={}&sort={"name": 1}';
 
-        return remoteService.get('appdata', endpoint, 'kinvey');
+      return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
     function addClient(client) {
-        const endpoint = 'clients';
+      const endpoint = 'clients';
 
-        return remoteService.post('appdata', endpoint, 'kinvey', client)
+      return remoteService.post('appdata', endpoint, 'kinvey', client);
     }
 
     function getTrainerClients(userId) {
-        const endpoint = `clients?query={"_acl.creator":"${userId}","active": "true"}&sort={"name": 1}`;
+      const endpoint = `clients?query={"_acl.creator":"${userId}","active": "true"}&sort={"name": 1}`;
 
-        return remoteService.get('appdata', endpoint, 'kinvey');
+      return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
     function getClientInfoById(clientId) {
-        const endpoint = `clients/${clientId}`;
+      const endpoint = `clients/${clientId}`;
 
-        return remoteService.get('appdata', endpoint, 'kinvey');
+      return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
     function addClientCard(clientId, card) {
-        const endpoint = 'cards';
+      const endpoint = 'cards';
 
-        return remoteService.post('appdata', endpoint, 'kinvey', card);
+      return remoteService.post('appdata', endpoint, 'kinvey', card);
     }
-    
-    function getClientCard(userId) {
-        const endpoint = `cards?query={"_acl.creator":"${userId}","active": "true"}&sort={"client_name": 1}`;
 
-        return remoteService.get('appdata', endpoint, 'kinvey');
+    function getClientCard(userId) {
+      const endpoint = `cards?query={"_acl.creator":"${userId}","active": "true"}&sort={"client_name": 1}`;
+
+      return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
     function getCardById(cardId) {
-        const endpoint = `cards/${cardId}`;
+      const endpoint = `cards/${cardId}`;
 
-        return remoteService.get('appdata', endpoint, 'kinvey');
+      return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
     function updateCard(cardId, card) {
-        const endpoint = `cards/${cardId}`;
+      const endpoint = `cards/${cardId}`;
 
-        return remoteService.update('appdata', endpoint, 'kinvey', card);
+      return remoteService.update('appdata', endpoint, 'kinvey', card);
     }
-    
+
     function updateClient(clientId, client) {
-        const endpoint = `clients/${clientId}`;
+      const endpoint = `clients/${clientId}`;
 
-        //let client = {
-        //    name: name,
-        //    info: {
-        //        sex: sex,
-        //        height: height,
-        //        wrist: wrist,
-        //        ankle: ankle
-        //    },
-        //    birth: birth,
-        //    phone: phone,
-        //    email: email,
-        //    discount: discount,
-        //    description: description,
-        //    active: active
-        //};
-
-        return remoteService.update('appdata', endpoint, 'kinvey', client)
+      return remoteService.update('appdata', endpoint, 'kinvey', client);
     }
 
     function getAllCards(userId) {
-        const endpoint = 'cards';
+      const endpoint = 'cards';
 
-        return remoteService.get('appdata', endpoint, 'kinvey');
+      return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
     function deleteCardById(cardId) {
-        const endpoint = `cards/${cardId}`;
+      const endpoint = `cards/${cardId}`;
 
-        return remoteService.remove('appdata', endpoint, 'kinvey');
+      return remoteService.remove('appdata', endpoint, 'kinvey');
     }
 
     return {
@@ -92,6 +76,6 @@ let clientService = (() => {
         updateCard,
         getAllCards,
         deleteCardById,
-        updateClient
-    }
-})();
+        updateClient,
+      };
+  })();

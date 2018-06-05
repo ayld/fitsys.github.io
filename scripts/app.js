@@ -3,7 +3,6 @@ $(() => {
         this.use('Handlebars', 'hbs');
 
         this.get('index.html', homeController.displayHome);
-        //this.get('#/home', homeController.displayHome);
         this.get('#/home', homeController.displayHome);
 
         this.get('#/register', userController.handleRegisterGet);
@@ -38,26 +37,30 @@ $(() => {
 
         this.get('#/filter', function () {
             $('#search').on('input', clientController.filterClient);
-        });
+          });
 
         this.get('#/sexLBM', function () {
             $('#sex-select').on('change keyup', lbmController.doLbm);
-        });
+          });
+
         this.get('#/heightLBM', function () {
             $('#height-select').on('change keyup', lbmController.doLbm);
-        });
+          });
+
         this.get('#/wristLBM', function () {
             $('#wrist-select').on('change keyup', lbmController.doLbm);
-        });
+          });
+
         this.get('#/ankleLBM', function () {
             $('#ankle-select').on('change keyup', lbmController.doLbm);
-        });
+          });
+
         this.get('#/fatLbm', function () {
-            $('#fat-select').on('change keyup', lbmController.doLbm)
-        });
-    });
+            $('#fat-select').on('change keyup', lbmController.doLbm);
+          });
+      });
 
     app.run();
-});
+  });
 
 //zones - 1:Active; 2:Available 3:Combined

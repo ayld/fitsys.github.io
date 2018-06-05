@@ -1,74 +1,68 @@
-let ProtoHelper = function () {};
+function heightLbm() {
+  let sex = document.getElementById('sex-select');
+  sex = sex.options[sex.options.selectedIndex].innerText;
+  let height = document.getElementById('height-select');
+  height = height.options[height.options.selectedIndex].value;
 
-ProtoHelper.prototype.heightLBM = function () {
-    let sex = InfoHelper.prototype.getSexText();
-    let height = InfoHelper.prototype.getHeight();
+  let heightRelativeLbm = sex === 'Male'
+      ? lbmModel.heightRelativeLBM(height, 0.973, 99.515)
+      : lbmModel.heightRelativeLBM(height, 0.861, 91.556);
 
-    let heightRelativeLbm = sex === 'Male'
-        ? lbmModel.heightRelativeLBM(height, 0.973, 99.515)
-        : lbmModel.heightRelativeLBM(height, 0.861, 91.556);
-
-    return Math.round(heightRelativeLbm);
+  return Math.round(heightRelativeLbm);
 };
 
-ProtoHelper.prototype.wristLBM = function () {
-    let sex = InfoHelper.prototype.getSexText();
-    let height = InfoHelper.prototype.getHeight();
-    let wrist = InfoHelper.prototype.getWrist();
+function wristLBM() {
+  let sex = InfoHelper.prototype.getSexText();
+  let height = InfoHelper.prototype.getHeight();
+  let wrist = InfoHelper.prototype.getWrist();
 
-    let heightRelativeWrist = sex === 'Male'
-        ? lbmModel.heightRelativeWrist(height, 0.048, 7.954)
-        : lbmModel.heightRelativeWrist(height, 0.043, 7.22);
+  let heightRelativeWrist = sex === 'Male'
+      ? lbmModel.heightRelativeWrist(height, 0.048, 7.954)
+      : lbmModel.heightRelativeWrist(height, 0.043, 7.22);
 
-    let wristLbm = lbmModel.wristLbm(wrist, heightRelativeWrist, ProtoHelper.prototype.heightLBM());
+  let wristLbm = lbmModel.wristLbm(wrist, heightRelativeWrist, heightLbm());
 
-    wristLbm = wristLbm === Infinity || wristLbm === -Infinity ? '' : Math.round(wristLbm);
+  wristLbm = wristLbm === Infinity || wristLbm === -Infinity ? '' : Math.round(wristLbm);
 
-    return wristLbm;
+  return wristLbm;
 };
 
-ProtoHelper.prototype.ankleLBM = function () {
-    let sex = InfoHelper.prototype.getSexText();
-    let height = InfoHelper.prototype.getHeight();
-    let ankle = InfoHelper.prototype.getAnkle();
+function ankleLBM() {
+  let sex = InfoHelper.prototype.getSexText();
+  let height = InfoHelper.prototype.getHeight();
+  let ankle = InfoHelper.prototype.getAnkle();
 
-    let heightRelativeAnkle = sex === 'Male'
-        ? lbmModel.heightRelativeAnkle(height, 0.059, 12.181)
-        : lbmModel.heightRelativeAnkle(height, 0.083, 5.667);
+  let heightRelativeAnkle = sex === 'Male'
+      ? lbmModel.heightRelativeAnkle(height, 0.059, 12.181)
+      : lbmModel.heightRelativeAnkle(height, 0.083, 5.667);
 
-    let ankleLbm = lbmModel.ankleLbm(ankle, heightRelativeAnkle, ProtoHelper.prototype.heightLBM());
+  let ankleLbm = lbmModel.ankleLbm(ankle, heightRelativeAnkle, heightLbm());
 
-    ankleLbm = ankleLbm === Infinity || ankleLbm === -Infinity ? '' : Math.round(ankleLbm);
+  ankleLbm = ankleLbm === Infinity || ankleLbm === -Infinity ? '' : Math.round(ankleLbm);
 
-    return ankleLbm;
+  return ankleLbm;
 };
 
-ProtoHelper.prototype.bodyHeight = function () {
-    let fat = InfoHelper.prototype.getFat();
+function bodyHeight() {
+  let fat = InfoHelper.prototype.getFat();
 
-    let bodyHeight = lbmModel.fatPercentBodyWeight(fat, ProtoHelper.prototype.heightLBM());
+  let bodyHeight = lbmModel.fatPercentBodyWeight(fat, heightLbm());
 
-    return Math.round(bodyHeight);
+  return Math.round(bodyHeight);
 };
 
-ProtoHelper.prototype.bodyWrist = function () {
-    let fat = InfoHelper.prototype.getFat();
+function bodyWrist() {
+  let fat = InfoHelper.prototype.getFat();
 
-    let bodyWrist = lbmModel.fatPercentBodyWeight(fat, ProtoHelper.prototype.wristLBM());
+  let bodyWrist = lbmModel.fatPercentBodyWeight(fat, wristLBM());
 
-    return Math.round(bodyWrist);
+  return Math.round(bodyWrist);
 };
 
-ProtoHelper.prototype.bodyAnkle = function () {
-    let fat = InfoHelper.prototype.getFat();
+function bodyAnkle() {
+  let fat = InfoHelper.prototype.getFat();
 
-    let bodyAnkle = lbmModel.fatPercentBodyWeight(fat, ProtoHelper.prototype.ankleLBM());
+  let bodyAnkle = lbmModel.fatPercentBodyWeight(fat, ankleLBM());
 
-    return Math.round(bodyAnkle);
+  return Math.round(bodyAnkle);
 };
-
-ProtoHelper.prototype.doLbm = async function (user) {
-    this.user = user || {};
-
-
-}
