@@ -5,31 +5,14 @@ let clientService = (() => {
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
-    function addClient(name, sex, height, wrist, ankle, birth, phone, email, description, discount, pt, active) {
-        let client = {
-            name: name,
-            info: {
-                sex: sex,
-                height: height,
-                wrist: wrist,
-                ankle: ankle
-            },
-            birth: birth,
-            phone: phone,
-            email: email,
-            description: description,
-            discount: discount,
-            pt: pt,
-            active: active
-        };
-
+    function addClient(client) {
         const endpoint = 'clients';
 
         return remoteService.post('appdata', endpoint, 'kinvey', client)
     }
 
     function getTrainerClients(userId) {
-        const endpoint = `clients?query={"_acl.creator":"${userId}","active": "true"}`;
+        const endpoint = `clients?query={"_acl.creator":"${userId}","active": "true"}&sort={"name": 1}`;
 
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
@@ -40,20 +23,7 @@ let clientService = (() => {
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
-    function addClientCard(clientId, client_name, qty, zone, price, payment, start, end, duration, active) {
-        let card = {
-            clientId: clientId,
-            client_name: client_name,
-            qty: qty,
-            zone: zone,
-            price: price,
-            payment: payment,
-            start: start,
-            end: end,
-            duration: duration,
-            active: active
-        };
-
+    function addClientCard(clientId, card) {
         const endpoint = 'cards';
 
         return remoteService.post('appdata', endpoint, 'kinvey', card);
@@ -71,43 +41,30 @@ let clientService = (() => {
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
-    function updateCard(cardId, clientId, client_name, qty, zone, price, payment, start, end, duration, active) {
+    function updateCard(cardId, card) {
         const endpoint = `cards/${cardId}`;
-
-        let card = {
-            clientId: clientId,
-            client_name: client_name,
-            qty: qty,
-            zone: zone,
-            price: price,
-            payment: payment,
-            start: start,
-            end: end,
-            duration: duration,
-            active: active
-        };
 
         return remoteService.update('appdata', endpoint, 'kinvey', card);
     }
     
-    function updateClient(clientId, name, sex, height, wrist, ankle, birth, phone, email, discount, description, active) {
+    function updateClient(clientId, client) {
         const endpoint = `clients/${clientId}`;
 
-        let client = {
-            name: name,
-            info: {
-                sex: sex,
-                height: height,
-                wrist: wrist,
-                ankle: ankle
-            },
-            birth: birth,
-            phone: phone,
-            email: email,
-            discount: discount,
-            description: description,
-            active: active
-        };
+        //let client = {
+        //    name: name,
+        //    info: {
+        //        sex: sex,
+        //        height: height,
+        //        wrist: wrist,
+        //        ankle: ankle
+        //    },
+        //    birth: birth,
+        //    phone: phone,
+        //    email: email,
+        //    discount: discount,
+        //    description: description,
+        //    active: active
+        //};
 
         return remoteService.update('appdata', endpoint, 'kinvey', client)
     }

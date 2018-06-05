@@ -1,67 +1,37 @@
 let lbmHelper = (() => {
-    async function displayLBM(
-        user,
-        _id,
-        name,
-        sex,
-        height,
-        wrist,
-        ankle,
-        heightLbm,
-        wristLbm,
-        ankleLbm,
-        fatPercent,
-        bodyWrist,
-        bodyAnkle,
-        bodyHeight,
-        ect,
-        lmt
-    ) {
-        user = {
-            id: _id,
-            name: name,
-            sex: sex,
-            height: height,
-            wrist: wrist,
-            ankle: ankle,
-            lbm: 0,
-            weight: 0,
-            ect: ect,
-            lmt: lmt
-        };
-
-        if (heightLbm && !wristLbm && !ankleLbm) {
-            user.lbm = heightLbm;
-            if (fatPercent) {
-                user.weight = bodyHeight;
+    async function displayLBM(user) {
+        if (user.heightLbm && !user.wristLbm && !user.ankleLbm) {
+            user.lbm = user.heightLbm;
+            if (user.fatPercent) {
+                user.weight = user.bodyHeight;
             }
-        } else if (wristLbm && !ankleLbm) {
-            user.lbm = wristLbm;
-            if (fatPercent) {
-                user.weight = bodyWrist;
+        } else if (user.wristLbm && !user.ankleLbm) {
+            user.lbm = user.wristLbm;
+            if (user.fatPercent) {
+                user.weight = user.bodyWrist;
             }
-        } else if (!wristLbm && ankleLbm) {
-            user.lbm = ankleLbm;
-            if (fatPercent) {
-                user.weight = bodyAnkle;
+        } else if (!user.wristLbm && user.ankleLbm) {
+            user.lbm = user.ankleLbm;
+            if (user.fatPercent) {
+                user.weight = user.bodyAnkle;
             }
         } else {
-            if (wristLbm < ankleLbm) {
-                user.lbm = wristLbm + ' - ' + ankleLbm;
-                if (fatPercent) {
-                    user.weight = bodyWrist + ' - ' + bodyAnkle;
+            if (user.wristLbm < user.ankleLbm) {
+                user.lbm = user.wristLbm + ' - ' + user.ankleLbm;
+                if (user.fatPercent) {
+                    user.weight = user.bodyWrist + ' - ' + user.bodyAnkle;
                 }
-            } else if (wristLbm > ankleLbm) {
-                user.lbm = ankleLbm + ' - ' + wristLbm;
-                if (fatPercent) {
-                    user.weight = bodyAnkle + ' - ' + bodyWrist;
+            } else if (user.wristLbm > user.ankleLbm) {
+                user.lbm = user.ankleLbm + ' - ' + user.wristLbm;
+                if (user.fatPercent) {
+                    user.weight = user.bodyAnkle + ' - ' + user.bodyWrist;
                 }
             } else {
-                if (wristLbm === ankleLbm) {
-                    user.lbm = wristLbm;
+                if (user.wristLbm === user.ankleLbm) {
+                    user.lbm = user.wristLbm;
                 }
-                if (fatPercent) {
-                    user.weight = bodyWrist;
+                if (user.fatPercent) {
+                    user.weight = user.bodyWrist;
                 }
             }
         }

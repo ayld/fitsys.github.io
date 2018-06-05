@@ -56,29 +56,33 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
         ctx.trainer = sessionStorage.getItem('trainer');
 
-        let name = InfoHelper.prototype.getRegisterName().toLowerCase();
-        let sex = InfoHelper.prototype.getRegisterSex();
-        let height = InfoHelper.prototype.getRegisterHeight();
-        let wrist = InfoHelper.prototype.getRegisterWrist();
-        let ankle = InfoHelper.prototype.getRegisterAnkle();
-        let birth = InfoHelper.prototype.getRegisterBirthDate();
-        let phone = InfoHelper.prototype.getRegisterPhone();
-        let email = InfoHelper.prototype.getRegisterEmail();
-        let description = InfoHelper.prototype.getRegisterDescription();
-        let discount = InfoHelper.prototype.getDiscount();
-        let pt = document.getElementById('trainers');
-        pt = pt.options[pt.options.selectedIndex].value
-        let active;
-
+        let p = document.getElementById('trainers')
         let isActive = document.getElementById('active').checked;
-        if (isActive) {
-            active = true
-        } else {
-            active = false;
+        let client = {
+            name: InfoHelper.prototype.getRegisterName().toLowerCase(),
+            info: {
+                sex: InfoHelper.prototype.getRegisterSex(),
+                height: InfoHelper.prototype.getRegisterHeight(),
+                wrist: InfoHelper.prototype.getRegisterWrist(),
+                ankle: InfoHelper.prototype.getRegisterAnkle()
+            },
+            birth: InfoHelper.prototype.getRegisterBirthDate(),
+            phone: InfoHelper.prototype.getRegisterPhone(),
+            email: InfoHelper.prototype.getRegisterEmail(),
+            description: InfoHelper.prototype.getRegisterDescription(),
+            discount: InfoHelper.prototype.getDiscount(),
+            pt: p.options[p.options.selectedIndex].value,
+            active: () => {
+                if (isActive) {
+                    return true
+                } else {
+                    return false;
+                }
+            }
         }
 
         if (window.confirm('CONFIRM ACTION!')) {
-            clientService.addClient(name, sex, height, wrist, ankle, birth, phone, email, description, discount, pt, active).then(() => {
+            clientService.addClient(client).then(() => {
                 notifyService.showInfo('Client added successfully.');
                 ctx.redirect('#/card');
             })
@@ -167,7 +171,7 @@ let clientController = (() => {
 
         ctx.isAuth = sessionStorage.getItem('authtoken');
 
-        let user = {};
+        let user;
 
         clientService.getClients().then((clients) => {
             let searchedName = InfoHelper.prototype.getInputName();
@@ -187,23 +191,25 @@ let clientController = (() => {
                                     $('#wrist-select').val(clients[index].info.wrist);
                                     $('#ankle-select').val(clients[index].info.ankle);
 
-                                    lbmHelper.displayLBM(
-                                        user,
-                                        clients[index]._id,
-                                        clients[index].name,
-                                        clients[index].info.sex,
-                                        clients[index].info.height,
-                                        clients[index].info.wrist,
-                                        clients[index].info.ankle,
-                                        ProtoHelper.prototype.heightLBM(),
-                                        ProtoHelper.prototype.wristLBM(),
-                                        ProtoHelper.prototype.ankleLBM(),
-                                        InfoHelper.prototype.getFat(),
-                                        ProtoHelper.prototype.bodyWrist(),
-                                        ProtoHelper.prototype.bodyAnkle(),
-                                        ProtoHelper.prototype.bodyHeight(),
-                                        notifyService.formatDate(clients[index]._kmd.ect),
-                                        notifyService.formatDate(clients[index]._kmd.lmt))
+                                    user = {
+                                        id: clients[index]._id,
+                                        name: clients[index].name,
+                                        sex: clients[index].info.sex,
+                                        height: clients[index].info.height,
+                                        wrist: clients[index].info.wrist,
+                                        ankle: clients[index].info.ankle,
+                                        heightLbm: ProtoHelper.prototype.heightLBM(),
+                                        wristLbm: ProtoHelper.prototype.wristLBM(),
+                                        ankleLbm: ProtoHelper.prototype.ankleLBM(),
+                                        fatPercent: InfoHelper.prototype.getFat(),
+                                        bodyWrist: ProtoHelper.prototype.bodyWrist(),
+                                        bodyAnkle: ProtoHelper.prototype.bodyAnkle(),
+                                        bodyHeight: ProtoHelper.prototype.bodyHeight(),
+                                        ect: notifyService.formatDate(clients[index]._kmd.ect),
+                                        lmt: notifyService.formatDate(clients[index]._kmd.lmt)
+                                    }
+
+                                    lbmHelper.displayLBM(user)
                                 }
                             })
                         }
@@ -258,21 +264,25 @@ let clientController = (() => {
         clientService.getCardById(cardId).then((card) => {
             let clientId = card.clientId;
             clientService.getClientInfoById(clientId).then((client) => {
-                let client_name = document.getElementById('name-edit').value.toLowerCase();
                 let qty = document.getElementById('qty-edit');
-                qty = qty.options[qty.options.selectedIndex].innerText;
                 let zone = document.getElementById('zone-edit');
-                zone = zone.options[zone.options.selectedIndex].innerText
-                let payment = document.getElementById('payment-edit').value;
-                let price = document.getElementById('price-edit').value;
-                let start = document.getElementById('start-date-edit').value;
-                let end = document.getElementById('end-date-edit').value;
                 let duration = document.getElementById('duration-edit');
-                duration = duration.options[duration.options.selectedIndex].innerText;
-                let active = true;
+
+                let card = {
+                    clientId: clientId,
+                    client_name: document.getElementById('name-edit').value.toLowerCase(),
+                    qty: qty.options[qty.options.selectedIndex].innerText,
+                    zone: zone.options[zone.options.selectedIndex].innerText,
+                    payment: document.getElementById('payment-edit').value,
+                    price: document.getElementById('price-edit').value,
+                    start: document.getElementById('start-date-edit').value,
+                    end: document.getElementById('end-date-edit').value,
+                    duration: duration.options[duration.options.selectedIndex].innerText,
+                    active: true
+                }
 
                 if (window.confirm('CONFIRM ACTION!')) {
-                    clientService.updateCard(cardId, clientId, client_name, qty, zone, price, payment, start, end, duration, active).then(() => {
+                    clientService.updateCard(cardId, card).then(() => {
                         notifyService.showInfo('Card edited successfully.');
                         ctx.redirect('#/accounting');
                     })
@@ -306,18 +316,21 @@ let clientController = (() => {
 
                         if (end < today) {
                             let cardId = cards[index]._id;
-                            let clientId = cards[index].clientId;
-                            let client_name = cards[index].client_name;
-                            let qty = cards[index].qty;
-                            let zone = cards[index].zone;
-                            let price = cards[index].price;
-                            let payment = cards[index].payment;
-                            let start = cards[index].start;
-                            let end = cards[index].end;
-                            let duration = cards[index].duration;
-                            let active = cards[index].active;
-                            active = false;
-                            clientService.updateCard(cardId, clientId, client_name, qty, zone, price, payment, start, end, duration, active).then(() => {
+                            let card = {
+                                clientId: cards[index].clientId,
+                                client_name: cards[index].client_name,
+                                qty: cards[index].qty,
+                                zone: cards[index].zone,
+                                price: cards[index].price,
+                                payment: cards[index].payment,
+                                start: cards[index].start,
+                                end: cards[index].end,
+                                duration: cards[index].duration,
+                                active: cards[index].active = false
+                                //active: false
+                            }
+
+                            clientService.updateCard(cardId, card).then(() => {
                                 ctx.cards = cards
                             })
                         }
@@ -391,36 +404,41 @@ let clientController = (() => {
         let clientId = InfoHelper.prototype.getSelectedClientId();
 
         clientService.getClientInfoById(clientId).then((client) => {
-            let client_name = InfoHelper.prototype.getSelectedClientName();
             let qty = document.getElementById('qty');
-            qty = qty.options[qty.options.selectedIndex].innerText;
-            let zone = InfoHelper.prototype.getZoneText();
-            let price = InfoHelper.prototype.getPrice();
-            let payment = InfoHelper.prototype.getPaymentText();
-            let start = InfoHelper.prototype.getStartDate();
-            let end;
+            let end = InfoHelper.prototype.getEndDate();
+            let today = InfoHelper.prototype.getToday();
             let duration = InfoHelper.prototype.getDuration();
-            let today = Date.parse(InfoHelper.prototype.getToday());
-            let active = true;
-
-            if (duration === 'unlimited') {
-                end = null
-            } else {
-                end = InfoHelper.prototype.getEndDate();
-            }
             let expired = Date.parse(end);
-            if (expired < today) {
-                alert('Add valid period.');
-                return;
-            } else {
-                active = true;
+            let less = Date.parse(today)
+            let card = {
+                clientId: clientId,
+                client_name: InfoHelper.prototype.getSelectedClientName(),
+                qty: qty.options[qty.options.selectedIndex].innerText,
+                zone: InfoHelper.prototype.getZoneText(),
+                price: InfoHelper.prototype.getPrice(),
+                payment: InfoHelper.prototype.getPaymentText(),
+                start: InfoHelper.prototype.getStartDate(),
+                end: () => {
+                    if (duration === 'unlimited') {
+                        return null
+                    } else {
+                        return end
+                    }
+                },
+                duration: duration,
+                active: true
             }
 
-            if (window.confirm('CONFIRM ACTION!')) {
-                clientService.addClientCard(clientId, client_name, qty, zone, price, payment, start, end, duration, active).then(() => {
-                    notifyService.showInfo('Card added successfully.');
-                    ctx.redirect('#/accounting');
-                })
+            if (expired < less) {
+                alert('Add valid period.')
+                return
+            } else {
+                if (window.confirm('CONFIRM ACTION!')) {
+                    clientService.addClientCard(clientId, card).then(() => {
+                        notifyService.showInfo('Card added successfully.');
+                        ctx.redirect('#/accounting');
+                    })
+                }
             }
         })
     }
@@ -491,27 +509,32 @@ let clientController = (() => {
 
     function updateClientPost(ctx) {
         let clientId = sessionStorage.getItem('clientId');
-        let name = document.getElementById('client-name-edit').value.toLowerCase();
-        let sex = document.getElementById('sex-edit').value.toLowerCase();
-        let height = document.getElementById('height-edit').value;
-        let wrist = document.getElementById('wrist-edit').value;
-        let ankle = document.getElementById('ankle-edit').value;
-        let birth = document.getElementById('date-edit').value;
-        let phone = document.getElementById('phone-edit').value;
-        let email = document.getElementById('email-edit').value;
-        let discount = document.getElementById('discount-edit').value;
-        let description = document.getElementById('text-edit').value;
-        let active;
-
         let isActive = document.getElementById('active-edit').checked;
-        if (isActive) {
-            active = true
-        } else {
-            active = false;
+
+        let client = {
+            name: document.getElementById('client-name-edit').value.toLowerCase(),
+            info: {
+                sex: document.getElementById('sex-edit').value.toLowerCase(),
+                height: document.getElementById('height-edit').value,
+                wrist: document.getElementById('wrist-edit').value,
+                ankle: document.getElementById('ankle-edit').value,
+            },
+            birth: document.getElementById('date-edit').value,
+            phone: document.getElementById('phone-edit').value,
+            email: document.getElementById('email-edit').value,
+            discount: document.getElementById('discount-edit').value,
+            description: document.getElementById('text-edit').value,
+            active: () => {
+                if (isActive) {
+                    return true
+                } else {
+                    return false
+                }
+            }
         }
 
         if (window.confirm('CONFIRM ACTION!')) {
-            clientService.updateClient(clientId, name, sex, height, wrist, ankle, birth, phone, email, discount, description, active).then(() => {
+            clientService.updateClient(clientId, client).then(() => {
                 notifyService.showInfo('Client edited successfully.');
                 ctx.redirect('#/accounting');
             })
