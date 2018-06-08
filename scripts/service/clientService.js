@@ -17,6 +17,12 @@ let clientService = (() => {
       return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
+    function getAllTrainerClients(userID) {
+      const endpoint = `clients?query={"_acl.creator":"${userID}"}&sort={"name": 1}`;
+
+      return remoteService.get('appdata', endpoint, 'kinvey');
+    }
+
     function getClientInfoById(clientId) {
       const endpoint = `clients/${clientId}`;
 
@@ -69,6 +75,7 @@ let clientService = (() => {
         getClients,
         addClient,
         getTrainerClients,
+				getAllTrainerClients,
         getClientInfoById,
         addClientCard,
         getClientCard,

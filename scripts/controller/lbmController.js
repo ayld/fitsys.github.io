@@ -1,15 +1,11 @@
 let lbmController = (() => {
     async function doLbm() {
-      let id = document.getElementById('client');
-      let name = document.getElementById('client');
-      let sex = document.getElementById('sex-select');
-      sex = sex.options[sex.options.selectedIndex].innerText;
-      let height = document.getElementById('height-select');
-      height = height.options[height.options.selectedIndex].value;
-      let wrist = document.getElementById('wrist-select');
-      wrist = wrist.options[wrist.options.selectedIndex].value;
-      let ankle = document.getElementById('ankle-select');
-      ankle = ankle.options[ankle.options.selectedIndex].value;
+      let id = globalInfo.getSelectedVal(document.getElementById('client'));
+      let name = globalInfo.getSelectedText(document.getElementById('client'));
+      let sex = globalInfo.getSelectedText(document.getElementById('sex-select'));
+      let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
+      let wrist = globalInfo.getSelectedVal(document.getElementById('wrist-select'));
+      let ankle = globalInfo.getSelectedVal(document.getElementById('ankle-select'));
       let fat = document.getElementById('fat-select');
 
       let heightRelativeLbm = sex === 'Male'
@@ -38,8 +34,8 @@ let lbmController = (() => {
       bodyAnkle = Math.round(bodyAnkle);
 
       let user = {
-        id: id.options[id.options.selectedIndex].value,
-        name: name.options[name.options.selectedIndex].innerText,
+        id: id,
+        name: name,
         sex: sex,
         height: height,
         wrist: wrist,

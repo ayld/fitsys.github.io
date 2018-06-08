@@ -54,29 +54,22 @@ let clientController = (() => {
       ctx.isAuth = sessionStorage.getItem('authtoken');
       ctx.trainer = sessionStorage.getItem('trainer');
 
-      let p = document.getElementById('trainers');
       let isActive = document.getElementById('active').checked;
       let client = {
-          name: InfoHelper.prototype.getRegisterName().toLowerCase(),
+          name: globalInfo.getInputVal(document.getElementById('name-reg')).toLowerCase(),
           info: {
-              sex: InfoHelper.prototype.getRegisterSex(),
-              height: InfoHelper.prototype.getRegisterHeight(),
-              wrist: InfoHelper.prototype.getRegisterWrist(),
-              ankle: InfoHelper.prototype.getRegisterAnkle(),
+              sex: globalInfo.getSelectedVal(document.getElementById('sex-reg')),
+              height: globalInfo.getSelectedVal(document.getElementById('height-reg')),
+              wrist: globalInfo.getSelectedVal(document.getElementById('wrist-reg')),
+              ankle: globalInfo.getSelectedVal(document.getElementById('ankle-reg')),
             },
-          birth: InfoHelper.prototype.getRegisterBirthDate(),
-          phone: InfoHelper.prototype.getRegisterPhone(),
-          email: InfoHelper.prototype.getRegisterEmail(),
-          description: InfoHelper.prototype.getRegisterDescription(),
-          discount: InfoHelper.prototype.getDiscount(),
-          pt: p.options[p.options.selectedIndex].value,
-          active: () => {
-              if (isActive) {
-                return true;
-              } else {
-                return false;
-              }
-            },
+          birth: globalInfo.getInputVal(document.getElementById('date-reg')),
+          phone: globalInfo.getInputVal(document.getElementById('phone-reg')),
+          email: globalInfo.getInputVal(document.getElementById('email-reg')),
+          description: globalInfo.getInputVal(document.getElementById('text-reg')),
+          discount: globalInfo.getSelectedVal(document.getElementById('discount')),
+          pt: globalInfo.getSelectedVal(document.getElementById('trainers')),
+          active: isActive,
         };
 
       if (window.confirm('CONFIRM ACTION!')) {
@@ -130,7 +123,7 @@ let clientController = (() => {
 
       clientService.getClients().then((clients) => {
           let $select = $('select#client.form-control');
-          let searchedName = InfoHelper.prototype.getInputName().toLowerCase();
+          let searchedName = globalInfo.getInputVal(document.getElementById('search')).toLowerCase();
 
           for (let index in clients) {
             if (clients.hasOwnProperty(index)) {
@@ -159,9 +152,9 @@ let clientController = (() => {
       let user;
 
       clientService.getClients().then((clients) => {
-          let searchedName = InfoHelper.prototype.getInputName();
+          let searchedName = globalInfo.getInputVal(document.getElementById('search'));
           let sex = $('#sex-select').find('option');
-          let selectedName = InfoHelper.prototype.getSelectedName();
+          let selectedName = globalInfo.getSelectedText(document.getElementById('client'));
 
           for (let index in clients) {
             if (clients.hasOwnProperty(index)) {
@@ -186,7 +179,7 @@ let clientController = (() => {
                             heightLbm: heightLbm(),
                             wristLbm: wristLBM(),
                             ankleLbm: ankleLBM(),
-                            fatPercent: InfoHelper.prototype.getFat(),
+                            fatPercent: '', //globalInfo.getSelectedVal(document.getElementById('fat-select'))
                             bodyWrist: bodyWrist(),
                             bodyAnkle: bodyAnkle(),
                             bodyHeight: bodyHeight(),
@@ -249,20 +242,23 @@ let clientController = (() => {
       clientService.getCardById(cardId).then((card) => {
           let clientId = card.clientId;
           clientService.getClientInfoById(clientId).then((client) => {
-              let qty = document.getElementById('qty-edit');
-              let zone = document.getElementById('zone-edit');
-              let duration = document.getElementById('duration-edit');
-
               let card = {
                   clientId: clientId,
                   client_name: document.getElementById('name-edit').value.toLowerCase(),
-                  qty: qty.options[qty.options.selectedIndex].innerText,
-                  zone: zone.options[zone.options.selectedIndex].innerText,
-                  payment: document.getElementById('payment-edit').value,
-                  price: document.getElementById('price-edit').value,
-                  start: document.getElementById('start-date-edit').value,
-                  end: document.getElementById('end-date-edit').value,
-                  duration: duration.options[duration.options.selectedIndex].innerText,
+                  qty: globalInfo.getSelectedText(document.getElementById('qty-edit')),
+                  zone: globalInfo.getSelectedText(document.getElementById('zone-edit')),
+                  price: globalInfo.getInputVal(document.getElementById('price-edit')),
+                  payment: () => {
+                    if (globalInfo.getSelectedText(document.getElementById('payment-edit')) === 'no') {
+                      return 'Pending';
+                    } else {
+                      return Math.round(globalInfo.getInputVal(document.getElementById('price-edit')) * globalInfo.getSelectedVal(document.getElementById('payment-edit')));
+                    }
+                  },
+
+                  start: globalInfo.getInputVal(document.getElementById('start-date-edit')),
+                  end: globalInfo.getInputVal(document.getElementById('end-date-edit')),
+                  duration: globalInfo.getSelectedText(document.getElementById('duration-edit')),
                   active: true,
                 };
 
@@ -297,7 +293,7 @@ let clientController = (() => {
             for (let index in cards) {
               if (cards.hasOwnProperty(index)) {
                 let end = Date.parse(cards[index].end);
-                let today = Date.parse(InfoHelper.prototype.getToday());
+                let today = Date.parse(globalInfo.getToday());
 
                 if (end < today) {
                   let cardId = cards[index]._id;
@@ -324,15 +320,10 @@ let clientController = (() => {
                 ctx.count = cards.length;
                 total += Number(cards[index].price) - 60;
                 ctx.total = total;
-                if (cards[index].payment === 'Pending') {
-                  temp = 0;
-                } else if (cards[index].payment === '1/2') {
-                  temp = 0.5;
-                } else {
-                  temp = cards[index].payment;
+                if (Number(cards[index].payment)) {
+                  paid += (Number(cards[index].payment) - 60);
                 }
 
-                paid += (Number(cards[index].price) - 60) * temp;
                 ctx.paid = paid;
                 ctx.loadPartials({
                     header: './views/basic/header.hbs',
@@ -387,35 +378,35 @@ let clientController = (() => {
       ctx.isAuth = sessionStorage.getItem('authtoken');
       ctx.trainer = sessionStorage.getItem('trainer');
 
-      let clientId = InfoHelper.prototype.getSelectedClientId();
+      let clientId = globalInfo.getSelectedVal(document.getElementById('client-card'));
 
       clientService.getClientInfoById(clientId).then((client) => {
           let discount = client.discount;
-          let client_name = document.getElementById('client-card');
-          let qty = document.getElementById('qty');
-          let zone = document.getElementById('zone');
-          let payment = document.getElementById('payment');
-          let price = 185 * qty.options[qty.options.selectedIndex].value * zone.options[zone.options.selectedIndex].value * discount;
-          let end = InfoHelper.prototype.getEndDate();
-          let today = InfoHelper.prototype.getToday();
-          let duration = InfoHelper.prototype.getDuration();
+          let price = 185 *
+              globalInfo.getSelectedVal(document.getElementById('qty')) *
+              globalInfo.getSelectedVal(document.getElementById('zone')) *
+              discount;
+          let end = globalInfo.getEndDate();
+          let today = globalInfo.getToday();
+          let duration = globalInfo.getSelectedText(document.getElementById('duration'));
           let expired = Date.parse(end);
           let less = Date.parse(today);
           let card = {
               clientId: clientId,
-              client_name: client_name.options[client_name.options.selectedIndex].innerText,
-              qty: qty.options[qty.options.selectedIndex].innerText,
-              zone: zone.options[zone.options.selectedIndex].innerText,
+              client_name: globalInfo.getSelectedText(document.getElementById('client-card')),
+              qty: globalInfo.getSelectedText(document.getElementById('qty')),
+              zone: globalInfo.getSelectedText(document.getElementById('zone')),
               price: Math.round(price),
               payment: () => {
-                if (payment.options[payment.options.selectedIndex].innerText === 'no') {
+                if (globalInfo.getSelectedText(document.getElementById('payment')) === 'no') {
                   return 'Pending';
                 } else {
-                  return Math.round(price * payment.value);
+                  return Math.round(price * globalInfo.getSelectedVal(document.getElementById('payment')));
                 }
               },
 
-              start: InfoHelper.prototype.getStartDate(),
+              start: globalInfo.getStartDate(),
+              duration: globalInfo.getSelectedText(document.getElementById('duration')),
               end: () => {
                   if (duration === 'unlimited') {
                     return null;
@@ -424,7 +415,6 @@ let clientController = (() => {
                   }
                 },
 
-              duration: duration,
               active: true,
             };
 
@@ -523,13 +513,7 @@ let clientController = (() => {
           email: document.getElementById('email-edit').value,
           discount: document.getElementById('discount-edit').value,
           description: document.getElementById('text-edit').value,
-          active: () => {
-              if (isActive) {
-                return true;
-              } else {
-                return false;
-              }
-            },
+          active: isActive,
         };
 
       if (window.confirm('CONFIRM ACTION!')) {

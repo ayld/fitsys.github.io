@@ -92,7 +92,7 @@ let viewController = (() => {
     }
 
     function displayBirthDate() {
-      let date_input = $('input[name="date-reg"]');
+      let $dateInput = $('input[name="date-reg"]');
       let container = $('#add-client').length > 0 ? $('#add-client').parent() : 'body';
       let options = {
           format: 'mm/dd/yyyy',
@@ -100,29 +100,29 @@ let viewController = (() => {
           todayHighlight: true,
           autoclose: true,
         };
-      date_input.datepicker(options);
+      $dateInput.datepicker(options);
     }
 
     function displayCardDate() {
-      let dateInput = $('input[name="start-date"]');
+      let $dateInput = $('input[name="start-date"]');
       let container = $('#card').length > 0 ? $('#card').parent() : 'body';
       let options = {
-          format: 'mm/dd/yyyy',
+          format: 'yyyy-mm-dd',
           container: container,
           todayHighlight: true,
           autoclose: true,
         };
-      dateInput.datepicker(options);
+      $dateInput.datepicker(options);
     }
 
     function calcPrice() {
-      let clientId = InfoHelper.prototype.getSelectedClientId();
+      let clientId = globalInfo.getSelectedVal(document.getElementById('client-card'));
 
       clientService.getClientInfoById(clientId).then((client) => {
           let discount = client.discount;
-          let quantity = InfoHelper.prototype.getTimesPerWeek();
-          let zone = InfoHelper.prototype.getZoneValue();
-          let payment = InfoHelper.prototype.getPaymentValue();
+          let quantity = globalInfo.getSelectedVal(document.getElementById('qty'));
+          let zone = globalInfo.getSelectedVal(document.getElementById('zone'));
+          let payment = globalInfo.getSelectedVal(document.getElementById('payment'));
           let price = 185 * quantity * zone * payment * discount;
           price = Math.round(price);
           $('#price').val(price);
@@ -130,8 +130,10 @@ let viewController = (() => {
     }
 
     function calcEndDate() {
-      let duration = document.getElementById('duration').value;
-      let end = new Date(InfoHelper.prototype.getStartDate());
+      let duration = document.getElementById('duration');
+      duration = duration.options[duration.options.selectedIndex].value;
+      let start = document.getElementById('start-date');
+      let end = new Date(start.value);
       end.setDate(end.getDate() + Number(duration));
       let dd = end.getDate();
       let mm = end.getMonth() + 1;
@@ -145,7 +147,7 @@ let viewController = (() => {
         mm = '0' + mm;
       }
 
-      end = mm + '/' + dd + '/' + yyyy;
+      end = yyyy + '-' + mm + '-' + dd;
 
       $('#end').val(end);
     }
@@ -180,7 +182,7 @@ let viewController = (() => {
         mm = '0' + mm;
       }
 
-      end = mm + '/' + dd + '/' + yyyy;
+      end = yyyy + '-' + mm + '-' + dd;
 
       $('#end-date-edit').val(end);
     }

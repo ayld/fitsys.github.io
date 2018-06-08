@@ -1,8 +1,6 @@
 function heightLbm() {
-  let sex = document.getElementById('sex-select');
-  sex = sex.options[sex.options.selectedIndex].innerText;
-  let height = document.getElementById('height-select');
-  height = height.options[height.options.selectedIndex].value;
+  let sex = globalInfo.getSelectedText(document.getElementById('sex-select'));
+  let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
 
   let heightRelativeLbm = sex === 'Male'
       ? lbmModel.heightRelativeLBM(height, 0.973, 99.515)
@@ -12,9 +10,9 @@ function heightLbm() {
 };
 
 function wristLBM() {
-  let sex = InfoHelper.prototype.getSexText();
-  let height = InfoHelper.prototype.getHeight();
-  let wrist = InfoHelper.prototype.getWrist();
+  let sex = globalInfo.getSelectedText(document.getElementById('sex-select'));
+  let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
+  let wrist = globalInfo.getSelectedVal(document.getElementById('wrist-select'));
 
   let heightRelativeWrist = sex === 'Male'
       ? lbmModel.heightRelativeWrist(height, 0.048, 7.954)
@@ -28,9 +26,9 @@ function wristLBM() {
 };
 
 function ankleLBM() {
-  let sex = InfoHelper.prototype.getSexText();
-  let height = InfoHelper.prototype.getHeight();
-  let ankle = InfoHelper.prototype.getAnkle();
+  let sex = globalInfo.getSelectedText(document.getElementById('sex-select'));
+  let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
+  let ankle = globalInfo.getSelectedVal(document.getElementById('ankle-select'));
 
   let heightRelativeAnkle = sex === 'Male'
       ? lbmModel.heightRelativeAnkle(height, 0.059, 12.181)
@@ -44,7 +42,7 @@ function ankleLBM() {
 };
 
 function bodyHeight() {
-  let fat = InfoHelper.prototype.getFat();
+  let fat = ''; //globalInfo.getSelectedVal(document.getElementById('fat-select'));;
 
   let bodyHeight = lbmModel.fatPercentBodyWeight(fat, heightLbm());
 
@@ -52,7 +50,7 @@ function bodyHeight() {
 };
 
 function bodyWrist() {
-  let fat = InfoHelper.prototype.getFat();
+  let fat = ''; //globalInfo.getSelectedVal(document.getElementById('fat-select'));
 
   let bodyWrist = lbmModel.fatPercentBodyWeight(fat, wristLBM());
 
@@ -60,7 +58,7 @@ function bodyWrist() {
 };
 
 function bodyAnkle() {
-  let fat = InfoHelper.prototype.getFat();
+  let fat = ''; //globalInfo.getSelectedVal(document.getElementById('fat-select'));
 
   let bodyAnkle = lbmModel.fatPercentBodyWeight(fat, ankleLBM());
 
