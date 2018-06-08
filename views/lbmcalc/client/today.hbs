@@ -1,7 +1,7 @@
 <label for="today-select"></label>
 <select id="today-select">
     <script>
-        $(document).ready(function () {
+        (() => {
             let selector = document.getElementById('today-select');
             for (let i = 1; i <= 31; i++) {
                 selector.options[selector.options.length] = new Option(i, i);
@@ -11,6 +11,6 @@
             let month = today.getMonth();
             month = month + 1;
             $(`#today-select option[value="${day}"]`).prop('selected', true);
-        })
+        })()
     </script>
 </select>

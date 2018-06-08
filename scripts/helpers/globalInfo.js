@@ -18,7 +18,7 @@ let globalInfo = (() => {
 		function getToday() {
 				let today = new Date();
 				let dd = today.getDate();
-				let mm = today.getMonth() + 1;   //January is 0!
+				let mm = today.getMonth() + 1; //January is 0!
 				let yyyy = today.getFullYear();
 
 				if (dd < 10) {
@@ -38,7 +38,7 @@ let globalInfo = (() => {
 				let start = document.getElementById('start-date');
 				let date = new Date(start.value);
 				let dd = date.getDate();
-				let mm = date.getMonth() + 1;   //January is 0!
+				let mm = date.getMonth() + 1; //January is 0!
 				let yyyy = date.getFullYear();
 
 				if (dd < 10) {

@@ -1,0 +1,23 @@
+<div class="input-group">
+    <span class="input-group-addon" >
+        <i class="glyphicon glyphicon-option-vertical"></i>
+    </span>
+    <a href="#/weight">
+        <label for="fat-select"></label>
+        <select class="form-control"
+                name="fat-select" id="fat-select">
+            <script>
+                (() =>{
+                    let selector = document.getElementById('fat-select');
+                    let option = document.createElement('option');
+                    option.innerHTML = 'Fat';
+                    option.value = 0;
+                    selector.appendChild(option);
+                    for (let i = 3; i <= 22; i++) {
+                        selector.options[selector.options.length] = new Option(i, i);
+                    }
+                })()
+            </script>
+        </select>
+    </a>
+</div>
