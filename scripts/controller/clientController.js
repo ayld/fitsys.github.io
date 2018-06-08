@@ -4,28 +4,22 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
-
 				userService.getAllTrainers().then((trainers) => {
 						for (let index in trainers) {
 								if (trainers.hasOwnProperty(index)) {
 										ctx._id = trainers[index]._id
 										ctx.name = trainers[index].name
-
 										let currentlyLogged = sessionStorage.getItem('userId')
-
 										if (currentlyLogged === trainers[index]._id) {
 												let pos = trainers.indexOf(trainers[index])
 												let current = trainers.splice(pos, 1)[0]
 												trainers.unshift(current)
 										}
-
 										ctx.trainer = sessionStorage.getItem('trainer')
 										ctx.trainers = trainers
 								}
 						}
-
 						ctx.loadPartials({
 								header: './views/basic/header.hbs',
 								name: './views/lbmcalc/client/name.hbs',
@@ -39,7 +33,7 @@ let clientController = (() => {
 								trainer: './views/lbmcalc/client/trainer.hbs',
 								discount: './views/lbmcalc/client/discount.hbs',
 								footer: './views/basic/footer.hbs'
-						}).then(function() {
+						}).then(function () {
 								this.partial('./views/lbmcalc/client/addClientForm.hbs')
 						})
 				})
@@ -50,10 +44,8 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				ctx.trainer = sessionStorage.getItem('trainer')
-
 				let isActive = document.getElementById('active').checked
 				let client = {
 						name: globalInfo.getInputVal(document.getElementById('name-reg')).toLowerCase(),
@@ -71,7 +63,6 @@ let clientController = (() => {
 						pt: globalInfo.getSelectedVal(document.getElementById('trainers')),
 						active: isActive
 				}
-
 				if (window.confirm('CONFIRM ACTION!')) {
 						clientService.addClient(client).then(() => {
 								notifyService.showInfo('Client added successfully.')
@@ -85,18 +76,14 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
-
 				clientService.getClients().then((clients) => {
 						ctx.trainer = sessionStorage.getItem('trainer')
 						ctx.clients = clients
-
 						for (let index in clients) {
 								if (clients.hasOwnProperty(index)) {
 										ctx._id = clients[index]._id
 										ctx.name = clients[index].name
-
 										ctx.loadPartials({
 												header: './views/basic/header.hbs',
 												sex: './views/lbmcalc/anthropometry/sex.hbs',
@@ -106,7 +93,7 @@ let clientController = (() => {
 												client: './views/lbmcalc/client/client.hbs',
 												fat: './views/lbmcalc/client/fat.hbs',
 												footer: './views/basic/footer.hbs'
-										}).then(function() {
+										}).then(function () {
 												this.partial('./views/lbmcalc/input/main.hbs')
 										})
 								}
@@ -119,18 +106,15 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
-
 				clientService.getClients().then((clients) => {
 						let $select = $('select#client.form-control')
 						let searchedName = globalInfo.getInputVal(document.getElementById('search')).toLowerCase()
-
 						for (let index in clients) {
 								if (clients.hasOwnProperty(index)) {
 										if (searchedName) {
 												if (clients[index].name.toLowerCase().indexOf(searchedName) > -1) {
-														$($select).children().filter(function() {
+														$($select).children().filter(function () {
 																return $.trim(this.text) === clients[index].name
 														}).prop('selected', true)
 												}
@@ -147,16 +131,12 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
-
 				let user
-
 				clientService.getClients().then((clients) => {
 						let searchedName = globalInfo.getInputVal(document.getElementById('search'))
 						let sex = $('#sex-select').find('option')
 						let selectedName = globalInfo.getSelectedText(document.getElementById('client'))
-
 						for (let index in clients) {
 								if (clients.hasOwnProperty(index)) {
 										if (searchedName || selectedName) {
@@ -173,7 +153,6 @@ let clientController = (() => {
 																		} else if ($(entry).val() === 'female') {
 																				$('#fat-select').val(15)
 																		}
-
 																		user = {
 																				id: clients[index]._id,
 																				name: clients[index].name,
@@ -191,7 +170,6 @@ let clientController = (() => {
 																				ect: notifyService.formatDate(clients[index]._kmd.ect),
 																				lmt: notifyService.formatDate(clients[index]._kmd.lmt)
 																		}
-
 																		lbmHelper.displayLBM(user)
 																}
 														})
@@ -207,10 +185,8 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				ctx.trainer = sessionStorage.getItem('trainer')
-
 				let cardId = ctx.params.cardId
 				clientService.getCardById(cardId).then((card) => {
 						let clientId = card.clientId
@@ -219,14 +195,12 @@ let clientController = (() => {
 								ctx.price = card.price
 								ctx.start = card.start
 								ctx.end = card.end
-
 								let cardId = sessionStorage.setItem('cardId', ctx.params.cardId)
 								let clientId = sessionStorage.setItem('clientId', card.clientId)
-
 								ctx.loadPartials({
 										header: './views/basic/header.hbs',
 										footer: './views/basic/footer.hbs'
-								}).then(function() {
+								}).then(function () {
 										this.partial('./views/lbmcalc/edit/editCard.hbs')
 								})
 						})
@@ -238,12 +212,9 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				ctx.trainer = sessionStorage.getItem('trainer')
-
 				let cardId = sessionStorage.getItem('cardId')
-
 				clientService.getCardById(cardId).then((card) => {
 						let clientId = card.clientId
 						clientService.getClientInfoById(clientId).then((client) => {
@@ -260,13 +231,11 @@ let clientController = (() => {
 														return Math.round(globalInfo.getInputVal(document.getElementById('price-edit')) * globalInfo.getSelectedVal(document.getElementById('payment-edit')))
 												}
 										},
-
 										start: globalInfo.getInputVal(document.getElementById('start-date-edit')),
 										end: globalInfo.getInputVal(document.getElementById('end-date-edit')),
 										duration: globalInfo.getSelectedText(document.getElementById('duration-edit')),
 										active: true
 								}
-
 								if (window.confirm('CONFIRM ACTION!')) {
 										clientService.updateCard(cardId, card).then(() => {
 												notifyService.showInfo('Card edited successfully.')
@@ -282,10 +251,8 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				let userId = sessionStorage.getItem('userId')
-
 				clientService.getClientCard(userId).then((cards) => {
 						ctx.trainer = sessionStorage.getItem('trainer')
 						let total = 0
@@ -299,7 +266,6 @@ let clientController = (() => {
 										if (cards.hasOwnProperty(index)) {
 												let end = Date.parse(cards[index].end)
 												let today = Date.parse(globalInfo.getToday())
-
 												if (end < today) {
 														let cardId = cards[index]._id
 														let card = {
@@ -314,12 +280,10 @@ let clientController = (() => {
 																duration: cards[index].duration,
 																active: cards[index].active = false
 														}
-
 														clientService.updateCard(cardId, card).then(() => {
 																ctx.cards = cards
 														})
 												}
-
 												ctx.cards = cards
 												ctx.qty = cards[index].qty
 												ctx.count = cards.length
@@ -328,14 +292,13 @@ let clientController = (() => {
 												if (Number(cards[index].payment)) {
 														paid += (Number(cards[index].payment) - 60)
 												}
-
 												ctx.paid = paid
 												ctx.loadPartials({
 														header: './views/basic/header.hbs',
 														clientReg: './views/accounting/clientReg.hbs',
 														today: './views/lbmcalc/client/today.hbs',
 														footer: './views/basic/footer.hbs'
-												}).then(function() {
+												}).then(function () {
 														this.partial('./views/accounting/main.hbs')
 												})
 										}
@@ -349,14 +312,11 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				let userId = sessionStorage.getItem('userId')
-
 				clientService.getTrainerClients(userId).then((clients) => {
 						ctx.trainer = sessionStorage.getItem('trainer')
 						ctx.clients = clients
-
 						ctx.loadPartials({
 								header: './views/basic/header.hbs',
 								client: './views/lbmcalc/client/client.hbs',
@@ -368,7 +328,7 @@ let clientController = (() => {
 								end: './views/lbmcalc/client/end.hbs',
 								duration: './views/lbmcalc/client/duration.hbs',
 								footer: './views/basic/footer.hbs'
-						}).then(function() {
+						}).then(function () {
 								this.partial('./views/accounting/card.hbs')
 						})
 				})
@@ -379,12 +339,9 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				ctx.trainer = sessionStorage.getItem('trainer')
-
 				let clientId = globalInfo.getSelectedVal(document.getElementById('client-card'))
-
 				clientService.getClientInfoById(clientId).then((client) => {
 						let discount = client.discount
 						let price = 185 *
@@ -409,7 +366,6 @@ let clientController = (() => {
 												return Math.round(price * globalInfo.getSelectedVal(document.getElementById('payment')))
 										}
 								},
-
 								start: globalInfo.getStartDate(),
 								duration: globalInfo.getSelectedText(document.getElementById('duration')),
 								end: () => {
@@ -419,10 +375,8 @@ let clientController = (() => {
 												return end
 										}
 								},
-
 								active: true
 						}
-
 						if (expired < less) {
 								alert('Add valid period.')
 						} else {
@@ -451,10 +405,8 @@ let clientController = (() => {
 						ctx.redirect('#/home')
 						return
 				}
-
 				ctx.isAuth = sessionStorage.getItem('authtoken')
 				ctx.trainer = sessionStorage.getItem('trainer')
-
 				let clientId = ctx.params.clientId
 				clientService.getClientInfoById(clientId).then((client) => {
 						let clientId = sessionStorage.setItem('clientId', ctx.params.clientId)
@@ -469,31 +421,26 @@ let clientController = (() => {
 						ctx.discount = client.discount
 						ctx.description = client.description
 						ctx.active = client.active
-
 						userService.getAllTrainers().then((trainers) => {
 								for (let index in trainers) {
 										if (trainers.hasOwnProperty(index)) {
 												ctx._id = trainers[index]._id
 												ctx.name = trainers[index].name
-
 												let currentlyLogged = sessionStorage.getItem('userId')
-
 												if (currentlyLogged === trainers[index]._id) {
 														let pos = trainers.indexOf(trainers[index])
 														let current = trainers.splice(pos, 1)[0]
 														trainers.unshift(current)
 												}
-
 												ctx.trainer = sessionStorage.getItem('trainer')
 												ctx.trainers = trainers
 										}
 								}
-
 								ctx.loadPartials({
 										header: './views/basic/header.hbs',
 										trainer: './views/lbmcalc/client/trainer.hbs',
 										footer: './views/basic/footer.hbs'
-								}).then(function() {
+								}).then(function () {
 										this.partial('./views/lbmcalc/edit/editClient.hbs')
 								})
 						})
@@ -503,7 +450,6 @@ let clientController = (() => {
 		function updateClientPost(ctx) {
 				let clientId = sessionStorage.getItem('clientId')
 				let isActive = document.getElementById('active-edit').checked
-
 				let client = {
 						name: document.getElementById('client-name-edit').value.toLowerCase(),
 						info: {
@@ -519,7 +465,6 @@ let clientController = (() => {
 						description: document.getElementById('text-edit').value,
 						active: isActive
 				}
-
 				if (window.confirm('CONFIRM ACTION!')) {
 						clientService.updateClient(clientId, client).then(() => {
 								notifyService.showInfo('Client edited successfully.')
@@ -535,7 +480,6 @@ let clientController = (() => {
 						console.log(client)
 				})
 		}
-
 		return {
 				listAllClients,
 				filterClient,
