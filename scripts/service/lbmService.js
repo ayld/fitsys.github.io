@@ -3,7 +3,9 @@ let lbmService = (() => {
 				let sex = globalInfo.getSelectedText(document.getElementById('sex-select'));
 				let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
 
-				let heightRelativeLbm = sex === 'Male' ? lbmModel.heightRelativeLBM(height, 0.973, 99.515) : lbmModel.heightRelativeLBM(height, 0.861, 91.556);
+				let heightRelativeLbm = sex === 'Male'
+						? lbmModel.heightRelativeLBM(height, 0.973, 99.515)
+						: lbmModel.heightRelativeLBM(height, 0.861, 91.556);
 
 				return Math.round(heightRelativeLbm);
 		};
@@ -13,7 +15,9 @@ let lbmService = (() => {
 				let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
 				let wrist = globalInfo.getSelectedVal(document.getElementById('wrist-select'));
 
-				let heightRelativeWrist = sex === 'Male' ? lbmModel.heightRelativeWrist(height, 0.048, 7.954) : lbmModel.heightRelativeWrist(height, 0.043, 7.22);
+				let heightRelativeWrist = sex === 'Male'
+						? lbmModel.heightRelativeWrist(height, 0.048, 7.954)
+						: lbmModel.heightRelativeWrist(height, 0.043, 7.22);
 
 				let wristLbm = lbmModel.wristLbm(wrist, heightRelativeWrist, heightLbm());
 
@@ -27,7 +31,9 @@ let lbmService = (() => {
 				let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
 				let ankle = globalInfo.getSelectedVal(document.getElementById('ankle-select'));
 
-				let heightRelativeAnkle = sex === 'Male' ? lbmModel.heightRelativeAnkle(height, 0.059, 12.181) : lbmModel.heightRelativeAnkle(height, 0.083, 5.667);
+				let heightRelativeAnkle = sex === 'Male'
+						? lbmModel.heightRelativeAnkle(height, 0.059, 12.181)
+						: lbmModel.heightRelativeAnkle(height, 0.083, 5.667);
 
 				let ankleLbm = lbmModel.ankleLbm(ankle, heightRelativeAnkle, heightLbm());
 
@@ -61,11 +67,12 @@ let lbmService = (() => {
 		};
 
 		return {
-				heightLbm,
-				wristLBM,
-				ankleLBM,
-				bodyHeight,
-				bodyWrist,
-				bodyAnkle,
-		};
+		  heightLbm,
+    wristLBM,
+    ankleLBM,
+    bodyHeight,
+    bodyWrist,
+    bodyAnkle,
+  };
 })();
+
