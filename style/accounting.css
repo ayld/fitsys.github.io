@@ -161,12 +161,6 @@ tfoot {
     text-align: center
 }
 
-.one {
-    margin-right: 8%;
-}
-
-.two {
-    /*outline: 1px solid #377bb5;*/
-    margin-left: 8%;
-    /*outline-offset: 5px;*/
+#acc-info {
+    padding-top: 4%;
 }

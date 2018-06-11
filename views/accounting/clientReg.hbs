@@ -1,21 +1,24 @@
 <tr>
     <td>
-        <label for="checkbox123" class="label-table"></label>
-        <input type="checkbox" class="filled-in" id="checkbox123">
-
+        <label for="workout"></label>
+        <input type="checkbox" name="workout" id="workout">
+        <label for="today-select"></label>
+        <select id="today-select" name="today-select">
             {{> today}}
-
+            <script>generator.workoutDay()</script>
+        </select>
     </td>
     <td>{{formatName client_name}}</td>
     <td>
-        <span class="one">
+        <span class="edit-client">
             <a href="#/editClient/{{clientId}}" title="Edit client"><i class="glyphicon glyphicon-edit"></i></a>
         </span>
-        <span class="two">
-            <a data-toggle="modal" href="#myModal" title="Client info"><i class="glyphicon glyphicon-info-sign"></i></a>
+        &nbsp;
+        <span class="view-info">
+            <a href="#/clientInfo/{{_id}}" title="Client info"><i class="glyphicon glyphicon-info-sign"></i></a>
         </span>
     </td>
-    <td>{{multiply qty}}</td>
+    <td>{{workout}}/{{multiply qty}} [{{used workout qty}}%]</td>
     <td>{{zone}}</td>
     <td>{{price}}</td>
     <td>{{payment}}</td>
@@ -23,10 +26,11 @@
     <td>{{end}}</td>
     <td>{{duration}}</td>
     <td>
-        <span class="one">
+        <span class="edit-card">
             <a href="#/editCard/{{_id}}" title="Edit card"><i class="glyphicon glyphicon-edit"></i></a>
         </span>
-        <span class="two">
+        &nbsp;
+        <span class="remove-card">
             <a href="#/deleteCard/{{_id}}" title="Delete card"><i class="glyphicon glyphicon-trash"></i></a>
         </span>
     </td>

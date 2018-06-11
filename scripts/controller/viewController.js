@@ -75,20 +75,20 @@ let viewController = (() => {
     }
 
     function dateOptionValues() {
-      $(document).ready(function () {
-          let selector = document.createElement('select');
-          selector.id = 'today-select';
-          selector.name = 'today-select';
-          for (let i = 1; i <= 31; i++) {
-            selector.options[selector.options.length] = new Option(i, i);
-          }
+      (() => {
+        let selector = document.createElement('select');
+        selector.id = 'today-select';
+        selector.name = 'today-select';
+        for (let i = 1; i <= 31; i++) {
+          selector.options[selector.options.length] = new Option(i, i);
+        }
 
-          let today = new Date();
-          let day = today.getDate();
-          //let month = today.getMonth()
-          //month = month + 1
-          $(`#today-select option[value="${day}"]`).prop('selected', true);
-        });
+        let today = new Date();
+        let day = today.getDate();
+        let month = today.getMonth();
+        month = month + 1;
+        $(`#today-select option[value="${day}"]`).prop('selected', true);
+      })();
     }
 
     function displayBirthDate() {

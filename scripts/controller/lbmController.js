@@ -6,7 +6,9 @@ let lbmController = (() => {
       let height = globalInfo.getSelectedVal(document.getElementById('height-select'));
       let wrist = globalInfo.getSelectedVal(document.getElementById('wrist-select'));
       let ankle = globalInfo.getSelectedVal(document.getElementById('ankle-select'));
-      let fat = globalInfo.getSelectedVal();
+      let fat = globalInfo.getSelectedVal(document.getElementById('fat-select'));
+      let ect = sessionStorage.getItem('_kmd.ect');
+      let lmt = sessionStorage.getItem('_kmd.lmt');
 
       let user = {
         id: id,
@@ -22,6 +24,8 @@ let lbmController = (() => {
         bodyWrist: lbmService.bodyWrist,
         bodyAnkle: lbmService.bodyAnkle,
         bodyHeight: lbmService.bodyHeight,
+        ect: notifyService.formatDate(ect),
+        lmt: notifyService.formatDate(lmt),
       };
 
       await lbmHelper.displayLBM(user);

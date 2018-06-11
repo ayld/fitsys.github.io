@@ -24,3 +24,12 @@ Handlebars.registerHelper('formatName', function (name) {
 Handlebars.registerHelper('multiply', function (arg) {
     return arg * 4;
   });
+
+Handlebars.registerHelper('used', function (arg1, arg2) {
+      let res = Math.round((Number(arg1) / (Number(arg2) * 4)) * 100);
+      if (isNaN(res)) {
+      		return null;
+      } else {
+      		return res;
+      };
+    });

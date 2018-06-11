@@ -33,7 +33,9 @@ $(() => {
         this.get('#/editClient/:clientId', clientController.updateClientGet);
         this.post('#/editClient/:clientId', clientController.updateClientPost);
 
-        this.get('#/clientInfo/:clientId', clientController.getClientInfo);
+        this.get('#/clientInfo/:cardId', clientController.getInfo);
+
+        this.get('#/logSessions', clientController.logSessions);
 
         this.get('#/filter', function () {
             $('#search').on('input', clientController.filterClient);
@@ -56,7 +58,7 @@ $(() => {
           });
 
         this.get('#/weight', function () {
-            $('#fat-select').on('change keyup', lbmController.doLbm)
+            $('#fat-select').on('change keyup', lbmController.doLbm);
           });
       });
 

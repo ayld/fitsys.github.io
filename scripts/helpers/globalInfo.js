@@ -29,7 +29,7 @@ let globalInfo = (() => {
 						mm = '0' + mm;
 				}
 
-				today = mm + '/' + dd + '/' + yyyy;
+				today = yyyy + '-' + mm + '-' + dd;
 
 				return today;
 		}
@@ -75,6 +75,25 @@ let globalInfo = (() => {
 				return end;
 		}
 
+		function getWorkoutDay(day) {
+				let today = new Date();
+				let dd = day;
+				let mm = today.getMonth() + 1;
+				let yyyy = today.getFullYear();
+
+				if (dd < 10) {
+						dd = '0' + dd;
+				}
+
+				if (mm < 10) {
+						mm = '0' + mm;
+				}
+
+				today = yyyy + '-' + mm + '-' + dd;
+
+				return today;
+		}
+
 		return {
 				getInputVal,
 				getInputText,
@@ -82,6 +101,7 @@ let globalInfo = (() => {
 				getSelectedText,
 				getToday,
 				getStartDate,
-				getEndDate
+				getEndDate,
+				getWorkoutDay
 		};
 })();
