@@ -1,89 +1,60 @@
-<div class="well col-sm-12">
+<div class="well col-sm-6 col-md-offset-3">
     <form class="form-horizontal" id="client-info">
-        <h3 class="text-center">
-            Customer Info
-        </h3>
-        <hr>
-        <div class="form-group">
-            <label for="name-info" class="control-label col-sm-3">Name:</label>
-            <div class="form-control-static col-sm-2">
-                {{#if name}}
-                    <label>{{formatName name}}</label>
-                {{else}}
-                    <label>{{name}}</label>
-                {{/if}}
+        <div id="well-top-info">
+            <div class="form-group">
+                <label for="name-info" class="control-label col-sm-0"></label>
+                <div class="form-control-static col-sm-12">
+                    {{#if name}}
+                        <h3 class="text-center">{{formatName name}}</h3>
+                    {{else}}
+                        <h3 class="text-center">{{name}}</h3>
+                    {{/if}}
+                </div>
             </div>
+            <p><img class="client-img" src="{{avatar}}" alt="avatar"/></p>
         </div>
-        <div class="form-group">
-            <label for="sex-info" class="control-label col-sm-3">Sex:</label>
-            <div class="form-control-static col-sm-2">
-                {{#if sex}}
-                    <label>{{toUpperCase sex}}</label>
-                {{else}}
-                    <label>{{sex}}</label>
-                {{/if}}
-            </div>
-            <label for="birth-info" class="control-label col-sm-3">Card:</label>
-            <div class="form-control-static col-sm-4">
-                <label>{{dates}}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="height-info" class="control-label col-sm-3">Height:</label>
-            <div class="form-control-static col-sm-2">
-                <label>{{height}}
-                    <small> cm</small>
-                </label>
-            </div>
-            <label for="birth-info" class="control-label col-sm-3">Birthday:</label>
-            <div class="form-control-static col-sm-4">
-                <label>{{birth}}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="wrist-info" class="control-label col-sm-3">Wrist Girth:</label>
-            <div class="form-control-static col-sm-2">
-                <label>{{wrist}}
-                    <small> cm</small>
-                </label>
-            </div>
-            <label for="description-info" class="control-label col-sm-3">Description:</label>
-            <div class="form-control-static col-sm-4">
-                <label>{{description}}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="ankle-info" class="control-label col-sm-3">Ankle Girth:</label>
-            <div class="form-control-static col-sm-2">
-                <label>{{ankle}}
-                    <small> cm</small>
-                </label>
-            </div>
-            <label for="discount-info" class="control-label col-sm-3">Discount:</label>
-            <div class="form-control-static col-sm-4">
-                <label>{{discount}}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="phone-info" class="control-label col-sm-3">Phone:</label>
-            <div class="form-control-static col-sm-2">
-                <label>{{phone}}
-                </label>
-            </div>
-            <label for="ect-info" class="control-label col-sm-3">Registered:</label>
-            <div class="form-control-static col-sm-4">
-                <label>{{ect}}</label>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="email-info" class="control-label col-sm-3">Email:</label>
-            <div class="form-control-static col-sm-2">
-                <label>{{email}}
-                </label>
-            </div>
-            <label for="ect-info" class="control-label col-sm-3">Last modified:</label>
-            <div class="form-control-static col-sm-4">
-                <label>{{lmt}}</label>
+        <div id="well-bottom-info">
+            <div class="form-group">
+                <label for="sex-info" class="control-label col-sm-3">Sex:</label>
+                <div class="form-control-static col-sm-9">
+                    {{#if sex}}
+                        <label>{{toUpperCase sex}}</label>
+                    {{else}}
+                        <label>{{sex}}</label>
+                    {{/if}}
+                </div>
+                <label for="card-info" class="control-label col-sm-3">Sessions:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{dates}}</label>
+                </div>
+                <label for="birth-info" class="control-label col-sm-3">Birthday:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{birth}}</label>
+                </div>
+                <label for="description-info" class="control-label col-sm-3">Description:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{description}}</label>
+                </div>
+                <label for="discount-info" class="control-label col-sm-3">Discount:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{discount}}</label>
+                </div>
+                <label for="phone-info" class="control-label col-sm-3">Phone:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{phone}}</label>
+                </div>
+                <label for="email-info" class="control-label col-sm-3">Email:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{email}}</label>
+                </div>
+                <label for="ect-info" class="control-label col-sm-3">Registered:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{ect}}</label>
+                </div>
+                <label for="lmt-info" class="control-label col-sm-3">Last modified:</label>
+                <div class="form-control-static col-sm-9">
+                    <label>{{lmt}}</label>
+                </div>
             </div>
         </div>
     </form>

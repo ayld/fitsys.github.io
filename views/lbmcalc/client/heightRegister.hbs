@@ -5,18 +5,7 @@
         </span>
         <label for="height-reg"></label>
         <select class="form-control" name="height-reg" id="height-reg">
-            <script>
-                (() =>{
-                    let selector = document.getElementById('height-reg');
-                    let option = document.createElement('option');
-                    option.innerHTML = 'cm';
-                    option.value = 0;
-                    selector.appendChild(option);
-                    for (let i = 140; i <= 220; i++) {
-                        selector.options[selector.options.length] = new Option(i, i);
-                    }
-                })()
-            </script>
+            {{> heightOption}}
         </select>
     </div>
 </div>

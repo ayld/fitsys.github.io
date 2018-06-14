@@ -1,3 +1,5 @@
+//import {randomAvatar} from "../model/avatarsDb";
+
 let clientController = (() => {
 		function registerClientGet(ctx) {
 				if (!authService.isAuth()) {
@@ -29,6 +31,8 @@ let clientController = (() => {
 						ctx.loadPartials({
 								header: './views/basic/header.hbs',
 								name: './views/lbmcalc/client/name.hbs',
+								heightOption: './views/lbmcalc/anthropometry/heightOption.hbs',
+								options: './views/lbmcalc/anthropometry/options.hbs',
 								sexRegister: './views/lbmcalc/client/sexRegister.hbs',
 								heightRegister: './views/lbmcalc/client/heightRegister.hbs',
 								wristRegister: './views/lbmcalc/client/wristregister.hbs',
@@ -38,8 +42,9 @@ let clientController = (() => {
 								email: './views/lbmcalc/client/email.hbs',
 								trainer: './views/lbmcalc/client/trainer.hbs',
 								discount: './views/lbmcalc/client/discount.hbs',
+								avatar: './views/lbmcalc/client/avatar.hbs',
 								footer: './views/basic/footer.hbs',
-						}).then(function() {
+						}).then(function () {
 								this.partial('./views/lbmcalc/client/addClientForm.hbs');
 						});
 				});
@@ -54,8 +59,28 @@ let clientController = (() => {
 				ctx.isAuth = sessionStorage.getItem('authtoken');
 				ctx.trainer = sessionStorage.getItem('trainer');
 
+				let randomAvatar = [
+						'http://i67.tinypic.com/10dwmmb.jpg', 'http://i66.tinypic.com/262sm7q.jpg',
+						'http://i63.tinypic.com/2db198i.jpg', 'http://i65.tinypic.com/oqj4o6.jpg',
+						'http://i67.tinypic.com/24wws9s.jpg', 'http://i66.tinypic.com/jsd9ab.jpg',
+						'http://i68.tinypic.com/4lpx06.jpg', 'http://i65.tinypic.com/9kvy38.jpg',
+						'http://i63.tinypic.com/2gxqmmu.jpg', 'http://i63.tinypic.com/160edmb.jpg',
+						'http://i65.tinypic.com/14bks3k.jpg', 'http://i67.tinypic.com/302o30o.jpg',
+						'http://i64.tinypic.com/iw3hi8.jpg', 'http://i66.tinypic.com/bdpd1e.jpg',
+						'http://i64.tinypic.com/1zdykoz.jpg', 'http://i63.tinypic.com/2vb05dy.jpg',
+						'http://i66.tinypic.com/aot2y0.jpg', 'http://i64.tinypic.com/1z2draq.jpg',
+						'http://i64.tinypic.com/28a11s7.jpg', 'http://i67.tinypic.com/30kr8cm.jpg',
+						'http://i66.tinypic.com/11w8rkg.jpg', 'http://i63.tinypic.com/15dxjc8.jpg',
+						'http://i67.tinypic.com/2iawlf8.jpg', 'http://i67.tinypic.com/20zagk7.jpg',
+						'http://i68.tinypic.com/2zekoir.jpg', 'http://i64.tinypic.com/35jjdvn.jpg',
+						'http://i68.tinypic.com/34sjdar.jpg', 'http://i64.tinypic.com/t50rcw.jpg',
+				]
 				let isActive = document.getElementById('active').checked;
 				let client = {
+						avatar: () => {
+								return randomAvatar[Math.floor(Math.random() * randomAvatar.length)]
+										|| globalInfo.getInputVal(document.getElementById('avatar-reg'))
+						},
 						name: globalInfo.getInputVal(document.getElementById('name-reg')).toLowerCase(),
 						info: {
 								sex: globalInfo.getSelectedVal(document.getElementById('sex-reg')),
@@ -100,13 +125,15 @@ let clientController = (() => {
 										ctx.loadPartials({
 												header: './views/basic/header.hbs',
 												sex: './views/lbmcalc/anthropometry/sex.hbs',
+												heightOption: './views/lbmcalc/anthropometry/heightOption.hbs',
+												options: './views/lbmcalc/anthropometry/options.hbs',
 												height: './views/lbmcalc/anthropometry/height.hbs',
 												wrist: './views/lbmcalc/anthropometry/wrist.hbs',
 												ankle: './views/lbmcalc/anthropometry/ankle.hbs',
 												client: './views/lbmcalc/client/client.hbs',
 												fat: './views/lbmcalc/client/fat.hbs',
 												footer: './views/basic/footer.hbs',
-										}).then(function() {
+										}).then(function () {
 												this.partial('./views/lbmcalc/input/main.hbs');
 										});
 								}
@@ -130,7 +157,7 @@ let clientController = (() => {
 								if (clients.hasOwnProperty(index)) {
 										if (searchedName) {
 												if (clients[index].name.toLowerCase().indexOf(searchedName) > -1) {
-														$($select).children().filter(function() {
+														$($select).children().filter(function () {
 																return $.trim(this.text) === clients[index].name;
 														}).prop('selected', true);
 												}
@@ -229,7 +256,7 @@ let clientController = (() => {
 								ctx.loadPartials({
 										header: './views/basic/header.hbs',
 										footer: './views/basic/footer.hbs',
-								}).then(function() {
+								}).then(function () {
 										this.partial('./views/lbmcalc/edit/editCard.hbs');
 								});
 						});
@@ -260,7 +287,8 @@ let clientController = (() => {
 										if (globalInfo.getSelectedText(document.getElementById('payment-edit')) === 'no') {
 												return 'Pending';
 										} else {
-												return Math.round(globalInfo.getInputVal(document.getElementById('price-edit')) * globalInfo.getSelectedVal(document.getElementById('payment-edit')));
+												return Math.round(globalInfo.getInputVal(document.getElementById('price-edit')) *
+														globalInfo.getSelectedVal(document.getElementById('payment-edit')));
 										}
 								},
 
@@ -303,7 +331,9 @@ let clientController = (() => {
 												let end = Date.parse(cards[index].end);
 												let today = Date.parse(globalInfo.getToday());
 
-												if (end < today || Number(cards[index].workout) === Number(cards[index].qty) * 4) {
+												let isPending = cards[index].payment !== 'Pending';
+												let isHalfPaid = cards[index].payment === Math.round(cards[index].price * 0.5)
+												if ((end < today || Number(cards[index].workout) >= Number(cards[index].qty) * 4) && isPending) {
 														let cardId = cards[index]._id;
 														let card = {
 																clientId: cards[index].clientId,
@@ -326,6 +356,7 @@ let clientController = (() => {
 														});
 												}
 
+
 												ctx.cards = cards;
 												ctx.qty = cards[index].qty;
 												ctx.count = cards.length;
@@ -342,7 +373,7 @@ let clientController = (() => {
 														today: './views/lbmcalc/client/today.hbs',
 														clientReg: './views/accounting/clientReg.hbs',
 														footer: './views/basic/footer.hbs',
-												}).then(function() {
+												}).then(function () {
 														this.partial('./views/accounting/main.hbs');
 												});
 										}
@@ -360,6 +391,7 @@ let clientController = (() => {
 				ctx.isAuth = sessionStorage.getItem('authtoken');
 				let userId = sessionStorage.getItem('userId');
 
+				console.log(ctx.params)
 				clientService.getTrainerClients(userId).then((clients) => {
 						ctx.trainer = sessionStorage.getItem('trainer');
 						ctx.clients = clients;
@@ -375,7 +407,7 @@ let clientController = (() => {
 								end: './views/lbmcalc/client/end.hbs',
 								duration: './views/lbmcalc/client/duration.hbs',
 								footer: './views/basic/footer.hbs',
-						}).then(function() {
+						}).then(function () {
 								this.partial('./views/accounting/card.hbs');
 						});
 				});
@@ -504,7 +536,7 @@ let clientController = (() => {
 										header: './views/basic/header.hbs',
 										trainer: './views/lbmcalc/client/trainer.hbs',
 										footer: './views/basic/footer.hbs',
-								}).then(function() {
+								}).then(function () {
 										this.partial('./views/lbmcalc/edit/editClient.hbs');
 								});
 						});
@@ -541,6 +573,14 @@ let clientController = (() => {
 		}
 
 		function getInfo(ctx) {
+				if (!authService.isAuth()) {
+						ctx.redirect('#/home');
+						return;
+				}
+
+				ctx.isAuth = sessionStorage.getItem('authtoken');
+				ctx.trainer = sessionStorage.getItem('trainer');
+
 				let cardId = ctx.params.cardId
 				clientService.getCardById(cardId).then((card) => {
 						console.log(card);
@@ -562,14 +602,16 @@ let clientController = (() => {
 												ctx.ect = notifyService.formatDate(client._kmd.ect);
 												ctx.lmt = notifyService.formatDate(client._kmd.lmt);
 												ctx.trainer = client.pt;
-												ctx.dates = card.dates.replace(', ', '').replace(/[0-9]{4}\-{1}/gm, '')
+												ctx.avatar = client.avatar;
+												console.log(client.avatar)
+												ctx.dates = card.dates.replace(', ', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
 										}
 								}
 
 								ctx.loadPartials({
 										header: './views/basic/header.hbs',
 										footer: './views/basic/footer.hbs',
-								}).then(function() {
+								}).then(function () {
 										this.partial('./views/lbmcalc/client/clientInfo/clientData.hbs');
 								});
 						})
@@ -620,6 +662,7 @@ let clientController = (() => {
 														clientService.updateCard(cards[i]._id, card).then(() => {
 																notifyService.showInfo('Sessions logged.');
 																ctx.redirect('#/accounting');
+																//location.reload();
 														})
 												}
 										}

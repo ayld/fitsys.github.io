@@ -103,9 +103,9 @@ let viewController = (() => {
       $dateInput.datepicker(options);
     }
 
-    function displayCardDate() {
-      let $dateInput = $('input[name="start-date"]');
-      let container = $('#card').length > 0 ? $('#card').parent() : 'body';
+    function displayCardDate(selector) {
+      let $dateInput = $(`#${selector}`);
+      let container = $(`#${selector}`).length > 0 ? $(`#${selector}`).parent() : 'body';
       let options = {
           format: 'yyyy-mm-dd',
           container: container,

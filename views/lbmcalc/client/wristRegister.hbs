@@ -4,17 +4,6 @@
     </span>
     <label for="wrist-reg"></label>
     <select class="form-control" name="wrist-reg" id="wrist-reg">
-        <script>
-            (() =>{
-                let selector = document.getElementById('wrist-reg');
-                let option = document.createElement('option');
-                option.innerHTML = 'cm';
-                option.value = 0;
-                selector.appendChild(option);
-                for (let i = 10; i <= 26; i+=0.5) {
-                    selector.options[selector.options.length] = new Option(i, i);
-                }
-            })()
-        </script>
+        {{> options}}
     </select>
 </div>
