@@ -18,14 +18,14 @@ let viewController = (() => {
       } else {
         setTimeout(function () {
             $('#left')
-                .addClass('col-sm-8 col-md-8')
+                .addClass('col-sm-6 col-md-6')
                 .fadeIn('slow');
           }, 400);
       }
 
       $('#right')
           .removeClass('col-sm-4 col-md-4 col-md-offset-4')
-          .addClass('col-sm-4 col-md-4');
+          .addClass('col-sm-4 col-md-4 col-md-offset-1');
     }
 
     function wristOptionValues() {

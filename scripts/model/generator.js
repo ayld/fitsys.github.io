@@ -4,6 +4,7 @@ let generator = (() => {
 				let day = workoutDay.getDate();
 				let month = workoutDay.getMonth() + 1;
 				$(`#today-select option[value="${day}"]`).prop('selected', true);
+				window.workoutDay = function() {}
 		}
 
 		return {

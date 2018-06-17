@@ -19,10 +19,11 @@
                                                 <i class="fa fa-users" aria-hidden="true"></i>
                                             </span>
                                             <label for="client-card"></label>
-                                            <select onchange="calcPrice()" class="form-control" id="client-card" name="client-card">
+                                            <select onchange="calcPrice()" class="form-control" id="client-card"
+                                                    name="client-card">
                                                 <option value="client" class="default-search" selected>Client:</option>
                                                 {{#each clients}}
-                                                    {{> client}}
+                                                    <option value="{{_id}}">{{name}}</option>
                                                 {{/each}}
                                             </select>
                                         </div>
@@ -30,35 +31,92 @@
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Times per week</label>
-                                    {{> qty}}
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                            </span>
+                                            <label for="qty"></label>
+                                            <select onchange="calcPrice()" class="form-control" name="qty" id="qty">
+                                                <option value="0.5">1</option>
+                                                <option value="1" selected>2</option>
+                                                <option value="1.33">3</option>
+                                                <option value="1.58">4</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 form-group">
                                     <label>Zone</label>
-                                    {{> zone}}
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                            </span>
+                                            <label for="zone"></label>
+                                            <select onchange="calcPrice()" class="form-control" name="zone" id="zone">
+                                                <option value="1" selected>1</option>
+                                                <option value="0.75">2</option>
+                                                <option value="0.875">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Price</label>
-                                    {{> price}}
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span>
+                                        <input type="text" placeholder="Price" class="form-control" id="price" readonly>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Payment</label>
-                                    {{> payment}}
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-credit-card"></i>
+                                            </span>
+                                            <label for="payment"></label>
+                                            <select onchange="calcPrice()" class="form-control" name="payment" id="payment">
+                                                <option value="1" selected>no</option>
+                                                <option value="1">1</option>
+                                                <option value="0.5">1/2</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <div class="row">
                                 <div class="col-sm-4 form-group">
                                     <label>Start Date</label>
-                                    {{> start}}
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input onchange="viewController.calcEndDate()" required type="date" class="form-control" id="start-date" name="start-date"/>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>End Date</label>
-                                    {{> end}}
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                        <input type="text" placeholder="End Date" class="form-control" id="end" readonly>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 form-group">
                                     <label>Duration</label>
-                                    {{> duration}}
+                                    <div class="dropdown">
+                                        <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="glyphicon glyphicon-option-vertical"></i>
+                                            </span>
+                                            <label for="duration"></label>
+                                            <select onchange="viewController.calcEndDate()" class="form-control" name="duration" id="duration">
+                                                <option value="35" selected>5 weeks</option>
+                                                <option value="">unlimited</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                             <button type="submit" class="btn btn-success btn-block"><i
