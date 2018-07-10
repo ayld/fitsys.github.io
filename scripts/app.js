@@ -37,32 +37,34 @@ $(() => {
 
         this.get('#/logSessions', clientController.logSessions);
 
+        this.get('#/allClients', clientController.allTrainerClients)
+
         this.get('#/filter', function () {
             $('#search').on('input', clientController.filterClient);
-          });
+        });
 
         this.get('#/sexLBM', function () {
             $('#sex-select').on('change keyup', lbmController.doLbm);
-          });
+        });
 
         this.get('#/heightLBM', function () {
             $('#height-select').on('change keyup', lbmController.doLbm);
-          });
+        });
 
         this.get('#/wristLBM', function () {
             $('#wrist-select').on('change keyup', lbmController.doLbm);
-          });
+        });
 
         this.get('#/ankleLBM', function () {
             $('#ankle-select').on('change keyup', lbmController.doLbm);
-          });
+        });
 
         this.get('#/weight', function () {
             $('#fat-select').on('change keyup', lbmController.doLbm);
-          });
-      });
+        });
+    });
 
     app.run();
-  });
+});
 
 //zones - 1:Active; 2:Available/Happy Hour; 3:Combined;

@@ -1,293 +1,301 @@
-{{> header}}
-
-<div class="container-fluid z-depth-5" id="main">
-    <div class="col-sm-6 col-md-4 col-md-offset-4" id="right">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>Welcome: {{formatName trainer}}</strong>
-            </div>
-            <div class="panel-body">
-                <form action="#/populate" method="get" id="inputForm" class="form-group" role="form">
-                    <fieldset>
-                        <div class="row">
-                            <div class="col-sm-12 col-md-10  col-md-offset-1 ">
-                                <div class="form-group">
-                                    <div class="input-group">
+<div class="container-fluid" id="accounting">
+    <h2 class="trainer">{{formatName trainer}}</h2>
+    {{> header}}
+    <div class="container-fluid z-depth-5" id="main">
+        <div class="col-sm-6 col-md-4 col-md-offset-4" id="right">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Ideal Lean Body Mass [LBM] Calculator</strong>
+                </div>
+                <div class="panel-body">
+                    <form action="#/populate" method="get" id="inputForm" class="form-group" role="form">
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-sm-12 col-md-10  col-md-offset-1 ">
+                                    <div class="form-group">
+                                        <div class="input-group">
                                 <span class="input-group-addon">
                                     <i class="glyphicon glyphicon-search"></i>
                                 </span>
-                                        <a href="#/filter">
-                                            <label for="search"></label>
-                                            <input type="search" class="form-control" id="search" name="search"
-                                                   autofocus placeholder="Search" autocomplete="off"/>
-                                        </a>
+                                            <a href="#/filter">
+                                                <label for="search"></label>
+                                                <input type="search" class="form-control" id="search" name="search"
+                                                       autofocus placeholder="Search" autocomplete="off"/>
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="dropdown">
-                                        <div class="input-group">
+                                    <div class="form-group">
+                                        <div class="dropdown">
+                                            <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fa fa-users" aria-hidden="true"></i>
                                             </span>
-                                            <label for="client"></label>
-                                            <select class="form-control" id="client" name="client">
-                                                <option value="client" class="default-search" selected>Client</option>
-                                                {{#each clients}}
-                                                    <option value="{{_id}}">{{name}}</option>
-                                                {{/each}}
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <button type="submit" id="btnInfo" class="btn btn-primary btn-block"><i
-                                            class="fa fa-info"
-                                            aria-hidden="true"></i>
-                                        Show
-                                    </button>
-                                </div>
-                                <hr>
-                                <div class="form-horizontal">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-6" id="sex">
-                                                <div class="dropdown">
-                                                    <a href="#/sexLBM">
-                                                        <label for="sex-select">Sex</label>
-                                                        <select class="form-control" name="sex-select" id="sex-select">
-                                                            <option value="" class="default-sex" selected></option>
-                                                            <option value="male" class="male">Male</option>
-                                                            <option value="female" class="female">Female</option>
-                                                        </select>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6" id="height">
-                                                <div class="dropdown">
-                                                    <a href="#/heightLBM">
-                                                        <label for="height-select">Height</label>
-                                                        <select class="form-control" onchange="viewController.displayCard()" onkeyup="viewController.displayCard()"
-                                                                name="height-select" id="height-select">
-                                                            <option value="0" selected>0</option>
-                                                            <option value="140">140</option>
-                                                            <option value="141">141</option>
-                                                            <option value="142">142</option>
-                                                            <option value="143">144</option>
-                                                            <option value="145">145</option>
-                                                            <option value="146">146</option>
-                                                            <option value="147">147</option>
-                                                            <option value="148">148</option>
-                                                            <option value="149">149</option>
-                                                            <option value="150">150</option>
-                                                            <option value="151">151</option>
-                                                            <option value="152">152</option>
-                                                            <option value="153">153</option>
-                                                            <option value="154">154</option>
-                                                            <option value="155">155</option>
-                                                            <option value="156">156</option>
-                                                            <option value="157">157</option>
-                                                            <option value="158">158</option>
-                                                            <option value="159">159</option>
-                                                            <option value="160">160</option>
-                                                            <option value="161">161</option>
-                                                            <option value="162">162</option>
-                                                            <option value="163">163</option>
-                                                            <option value="163">164</option>
-                                                            <option value="165">165</option>
-                                                            <option value="166">166</option>
-                                                            <option value="167">167</option>
-                                                            <option value="168">168</option>
-                                                            <option value="169">169</option>
-                                                            <option value="170">170</option>
-                                                            <option value="171">171</option>
-                                                            <option value="172">172</option>
-                                                            <option value="173">173</option>
-                                                            <option value="174">174</option>
-                                                            <option value="175">175</option>
-                                                            <option value="176">176</option>
-                                                            <option value="177">177</option>
-                                                            <option value="178">178</option>
-                                                            <option value="179">179</option>
-                                                            <option value="180">180</option>
-                                                            <option value="181">181</option>
-                                                            <option value="182">182</option>
-                                                            <option value="183">183</option>
-                                                            <option value="184">184</option>
-                                                            <option value="185">185</option>
-                                                            <option value="186">186</option>
-                                                            <option value="187">187</option>
-                                                            <option value="188">188</option>
-                                                            <option value="189">189</option>
-                                                            <option value="190">190</option>
-                                                            <option value="191">191</option>
-                                                            <option value="192">192</option>
-                                                            <option value="193">193</option>
-                                                            <option value="194">194</option>
-                                                            <option value="195">195</option>
-                                                            <option value="196">196</option>
-                                                            <option value="197">197</option>
-                                                            <option value="198">198</option>
-                                                            <option value="199">199</option>
-                                                            <option value="200">200</option>
-                                                            <option value="201">201</option>
-                                                            <option value="202">202</option>
-                                                            <option value="203">203</option>
-                                                            <option value="204">204</option>
-                                                            <option value="205">205</option>
-                                                            <option value="206">206</option>
-                                                            <option value="207">207</option>
-                                                            <option value="208">208</option>
-                                                            <option value="209">209</option>
-                                                            <option value="210">210</option>
-                                                            <option value="211">211</option>
-                                                            <option value="212">212</option>
-                                                            <option value="213">213</option>
-                                                        </select>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-horizontal" id="circumference">
-                                    <div class="form-group">
-                                        <div class="row">
-                                            <div class="col-sm-6 col-md-6" id="wrist">
-                                                <a href="#/wristLBM">
-                                                    <label for="wrist-select">Wrist</label>
-                                                    <select class="form-control" name="wrist-select" id="wrist-select">
-                                                        <option value="0">0</option>
-                                                        <option value="11">11</option>
-                                                        <option value="11.5">11.5</option>
-                                                        <option value="12">12</option>
-                                                        <option value="12.5">12.5</option>
-                                                        <option value="13">13</option>
-                                                        <option value="13.5">13.5</option>
-                                                        <option value="14">14</option>
-                                                        <option value="14.5">14.5</option>
-                                                        <option value="15">15</option>
-                                                        <option value="15.5">15.5</option>
-                                                        <option value="16">16</option>
-                                                        <option value="16.5">16.5</option>
-                                                        <option value="17">17</option>
-                                                        <option value="17.5">17.5</option>
-                                                        <option value="18">18</option>
-                                                        <option value="18.5">18.5</option>
-                                                        <option value="19">19</option>
-                                                        <option value="19.5">19.5</option>
-                                                        <option value="20">20</option>
-                                                        <option value="20.5">20.5</option>
-                                                        <option value="21">21</option>
-                                                        <option value="21.5">21.5</option>
-                                                        <option value="22">22</option>
-                                                        <option value="22.5">22.5</option>
-                                                        <option value="23">23</option>
-                                                        <option value="23.5">23.5</option>
-                                                        <option value="24">24</option>
-                                                        <option value="24.5">24.5</option>
-                                                        <option value="25">25</option>
-                                                        <option value="25.5">25.5</option>
-                                                        <option value="26">26</option>
-                                                    </select>
-                                                </a>
-                                            </div>
-                                            <div class="col-sm-6 col-md-6" id="ankle">
-                                                <a href="#/ankleLBM" title="Ankle circumference in centimeters">
-                                                    <label for="ankle-select">Ankle</label>
-                                                    <select class="form-control" name="ankle-select" id="ankle-select">
-                                                        <option value="0">0</option>
-                                                        <option value="11">11</option>
-                                                        <option value="11.5">11.5</option>
-                                                        <option value="12">12</option>
-                                                        <option value="12.5">12.5</option>
-                                                        <option value="13">13</option>
-                                                        <option value="13.5">13.5</option>
-                                                        <option value="14">14</option>
-                                                        <option value="14.5">14.5</option>
-                                                        <option value="15">15</option>
-                                                        <option value="15.5">15.5</option>
-                                                        <option value="16">16</option>
-                                                        <option value="16.5">16.5</option>
-                                                        <option value="17">17</option>
-                                                        <option value="17.5">17.5</option>
-                                                        <option value="18">18</option>
-                                                        <option value="18.5">18.5</option>
-                                                        <option value="19">19</option>
-                                                        <option value="19.5">19.5</option>
-                                                        <option value="20">20</option>
-                                                        <option value="20.5">20.5</option>
-                                                        <option value="21">21</option>
-                                                        <option value="21.5">21.5</option>
-                                                        <option value="22">22</option>
-                                                        <option value="22.5">22.5</option>
-                                                        <option value="23">23</option>
-                                                        <option value="23.5">23.5</option>
-                                                        <option value="24">24</option>
-                                                        <option value="24.5">24.5</option>
-                                                        <option value="25">25</option>
-                                                        <option value="25.5">25.5</option>
-                                                        <option value="26">26</option>
-                                                        <option value="26.5">26.5</option>
-                                                        <option value="27">27</option>
-                                                        <option value="27.5">27.5</option>
-                                                        <option value="28">28</option>
-                                                        <option value="28.5">28.5</option>
-                                                        <option value="29">29</option>
-                                                        <option value="29.5">29.5</option>
-                                                        <option value="30">30</option>
-                                                        <option value="30.5">30.5</option>
-                                                        <option value="31">31</option>
-                                                    </select>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="form-group text-center">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-md-offset-3" id="fat">
-                                            <a href="#/weight">
-                                                <label for="fat-select">Fat%</label>
-                                                <select class="form-control" name="fat-select" id="fat-select">
-                                                    <option value="0">0</option>
-                                                    <option value="3">3</option>
-                                                    <option value="4">4</option>
-                                                    <option value="5">5</option>
-                                                    <option value="6">6</option>
-                                                    <option value="7">7</option>
-                                                    <option value="8">8</option>
-                                                    <option value="9">9</option>
-                                                    <option value="10">10</option>
-                                                    <option value="11">11</option>
-                                                    <option value="12">12</option>
-                                                    <option value="13">13</option>
-                                                    <option value="14">14</option>
-                                                    <option value="15">15</option>
-                                                    <option value="16">16</option>
-                                                    <option value="17">17</option>
-                                                    <option value="18">18</option>
-                                                    <option value="19">19</option>
-                                                    <option value="20">20</option>
-                                                    <option value="21">21</option>
-                                                    <option value="22">22</option>
+                                                <label for="client"></label>
+                                                <select class="form-control" id="client" name="client">
+                                                    <option value="client" class="default-search" selected>Client
+                                                    </option>
+                                                    {{#each clients}}
+                                                        <option value="{{_id}}">{{name}}</option>
+                                                    {{/each}}
                                                 </select>
-                                            </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" id="btnInfo" class="btn btn-primary btn-block"><i
+                                                class="fa fa-info"
+                                                aria-hidden="true"></i>
+                                            Show
+                                        </button>
+                                    </div>
+                                    <hr>
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6" id="sex">
+                                                    <div class="dropdown">
+                                                        <a href="#/sexLBM">
+                                                            <label for="sex-select">Sex</label>
+                                                            <select class="form-control" name="sex-select"
+                                                                    id="sex-select">
+                                                                <option value="" class="default-sex" selected></option>
+                                                                <option value="male" class="male">Male</option>
+                                                                <option value="female" class="female">Female</option>
+                                                            </select>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6" id="height">
+                                                    <div class="dropdown">
+                                                        <a href="#/heightLBM">
+                                                            <label for="height-select">Height</label>
+                                                            <select class="form-control"
+                                                                    onchange="viewController.displayCard()"
+                                                                    onkeyup="viewController.displayCard()"
+                                                                    name="height-select" id="height-select">
+                                                                <option value="0" selected>0</option>
+                                                                <option value="140">140</option>
+                                                                <option value="141">141</option>
+                                                                <option value="142">142</option>
+                                                                <option value="143">144</option>
+                                                                <option value="145">145</option>
+                                                                <option value="146">146</option>
+                                                                <option value="147">147</option>
+                                                                <option value="148">148</option>
+                                                                <option value="149">149</option>
+                                                                <option value="150">150</option>
+                                                                <option value="151">151</option>
+                                                                <option value="152">152</option>
+                                                                <option value="153">153</option>
+                                                                <option value="154">154</option>
+                                                                <option value="155">155</option>
+                                                                <option value="156">156</option>
+                                                                <option value="157">157</option>
+                                                                <option value="158">158</option>
+                                                                <option value="159">159</option>
+                                                                <option value="160">160</option>
+                                                                <option value="161">161</option>
+                                                                <option value="162">162</option>
+                                                                <option value="163">163</option>
+                                                                <option value="163">164</option>
+                                                                <option value="165">165</option>
+                                                                <option value="166">166</option>
+                                                                <option value="167">167</option>
+                                                                <option value="168">168</option>
+                                                                <option value="169">169</option>
+                                                                <option value="170">170</option>
+                                                                <option value="171">171</option>
+                                                                <option value="172">172</option>
+                                                                <option value="173">173</option>
+                                                                <option value="174">174</option>
+                                                                <option value="175">175</option>
+                                                                <option value="176">176</option>
+                                                                <option value="177">177</option>
+                                                                <option value="178">178</option>
+                                                                <option value="179">179</option>
+                                                                <option value="180">180</option>
+                                                                <option value="181">181</option>
+                                                                <option value="182">182</option>
+                                                                <option value="183">183</option>
+                                                                <option value="184">184</option>
+                                                                <option value="185">185</option>
+                                                                <option value="186">186</option>
+                                                                <option value="187">187</option>
+                                                                <option value="188">188</option>
+                                                                <option value="189">189</option>
+                                                                <option value="190">190</option>
+                                                                <option value="191">191</option>
+                                                                <option value="192">192</option>
+                                                                <option value="193">193</option>
+                                                                <option value="194">194</option>
+                                                                <option value="195">195</option>
+                                                                <option value="196">196</option>
+                                                                <option value="197">197</option>
+                                                                <option value="198">198</option>
+                                                                <option value="199">199</option>
+                                                                <option value="200">200</option>
+                                                                <option value="201">201</option>
+                                                                <option value="202">202</option>
+                                                                <option value="203">203</option>
+                                                                <option value="204">204</option>
+                                                                <option value="205">205</option>
+                                                                <option value="206">206</option>
+                                                                <option value="207">207</option>
+                                                                <option value="208">208</option>
+                                                                <option value="209">209</option>
+                                                                <option value="210">210</option>
+                                                                <option value="211">211</option>
+                                                                <option value="212">212</option>
+                                                                <option value="213">213</option>
+                                                            </select>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-horizontal" id="circumference">
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-sm-6 col-md-6" id="wrist">
+                                                    <a href="#/wristLBM">
+                                                        <label for="wrist-select">Wrist</label>
+                                                        <select class="form-control" name="wrist-select"
+                                                                id="wrist-select">
+                                                            <option value="0">0</option>
+                                                            <option value="11">11</option>
+                                                            <option value="11.5">11.5</option>
+                                                            <option value="12">12</option>
+                                                            <option value="12.5">12.5</option>
+                                                            <option value="13">13</option>
+                                                            <option value="13.5">13.5</option>
+                                                            <option value="14">14</option>
+                                                            <option value="14.5">14.5</option>
+                                                            <option value="15">15</option>
+                                                            <option value="15.5">15.5</option>
+                                                            <option value="16">16</option>
+                                                            <option value="16.5">16.5</option>
+                                                            <option value="17">17</option>
+                                                            <option value="17.5">17.5</option>
+                                                            <option value="18">18</option>
+                                                            <option value="18.5">18.5</option>
+                                                            <option value="19">19</option>
+                                                            <option value="19.5">19.5</option>
+                                                            <option value="20">20</option>
+                                                            <option value="20.5">20.5</option>
+                                                            <option value="21">21</option>
+                                                            <option value="21.5">21.5</option>
+                                                            <option value="22">22</option>
+                                                            <option value="22.5">22.5</option>
+                                                            <option value="23">23</option>
+                                                            <option value="23.5">23.5</option>
+                                                            <option value="24">24</option>
+                                                            <option value="24.5">24.5</option>
+                                                            <option value="25">25</option>
+                                                            <option value="25.5">25.5</option>
+                                                            <option value="26">26</option>
+                                                        </select>
+                                                    </a>
+                                                </div>
+                                                <div class="col-sm-6 col-md-6" id="ankle">
+                                                    <a href="#/ankleLBM" title="Ankle circumference in centimeters">
+                                                        <label for="ankle-select">Ankle</label>
+                                                        <select class="form-control" name="ankle-select"
+                                                                id="ankle-select">
+                                                            <option value="0">0</option>
+                                                            <option value="11">11</option>
+                                                            <option value="11.5">11.5</option>
+                                                            <option value="12">12</option>
+                                                            <option value="12.5">12.5</option>
+                                                            <option value="13">13</option>
+                                                            <option value="13.5">13.5</option>
+                                                            <option value="14">14</option>
+                                                            <option value="14.5">14.5</option>
+                                                            <option value="15">15</option>
+                                                            <option value="15.5">15.5</option>
+                                                            <option value="16">16</option>
+                                                            <option value="16.5">16.5</option>
+                                                            <option value="17">17</option>
+                                                            <option value="17.5">17.5</option>
+                                                            <option value="18">18</option>
+                                                            <option value="18.5">18.5</option>
+                                                            <option value="19">19</option>
+                                                            <option value="19.5">19.5</option>
+                                                            <option value="20">20</option>
+                                                            <option value="20.5">20.5</option>
+                                                            <option value="21">21</option>
+                                                            <option value="21.5">21.5</option>
+                                                            <option value="22">22</option>
+                                                            <option value="22.5">22.5</option>
+                                                            <option value="23">23</option>
+                                                            <option value="23.5">23.5</option>
+                                                            <option value="24">24</option>
+                                                            <option value="24.5">24.5</option>
+                                                            <option value="25">25</option>
+                                                            <option value="25.5">25.5</option>
+                                                            <option value="26">26</option>
+                                                            <option value="26.5">26.5</option>
+                                                            <option value="27">27</option>
+                                                            <option value="27.5">27.5</option>
+                                                            <option value="28">28</option>
+                                                            <option value="28.5">28.5</option>
+                                                            <option value="29">29</option>
+                                                            <option value="29.5">29.5</option>
+                                                            <option value="30">30</option>
+                                                            <option value="30.5">30.5</option>
+                                                            <option value="31">31</option>
+                                                        </select>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group text-center">
+                                        <div class="row">
+                                            <div class="col-sm-6 col-md-offset-3" id="fat">
+                                                <a href="#/weight">
+                                                    <label for="fat-select">Fat%</label>
+                                                    <select class="form-control" name="fat-select" id="fat-select">
+                                                        <option value="0">0</option>
+                                                        <option value="3">3</option>
+                                                        <option value="4">4</option>
+                                                        <option value="5">5</option>
+                                                        <option value="6">6</option>
+                                                        <option value="7">7</option>
+                                                        <option value="8">8</option>
+                                                        <option value="9">9</option>
+                                                        <option value="10">10</option>
+                                                        <option value="11">11</option>
+                                                        <option value="12">12</option>
+                                                        <option value="13">13</option>
+                                                        <option value="14">14</option>
+                                                        <option value="15">15</option>
+                                                        <option value="16">16</option>
+                                                        <option value="17">17</option>
+                                                        <option value="18">18</option>
+                                                        <option value="19">19</option>
+                                                        <option value="20">20</option>
+                                                        <option value="21">21</option>
+                                                        <option value="22">22</option>
+                                                    </select>
+                                                </a>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-            <div class="panel-footer text-center">
-                <a href="#/lbm">
-                    <button type="button" id="btnReset" class="btn btn-default">Reset</button>
-                </a>
+                        </fieldset>
+                    </form>
+                </div>
+                <div class="panel-footer text-center">
+                    <a href="#/lbm">
+                        <button type="button" id="btnReset" class="btn btn-default">Reset</button>
+                    </a>
+                </div>
             </div>
         </div>
+        <div id="left"></div>
     </div>
-    <div id="left"></div>
 </div>
 
 {{> footer}}

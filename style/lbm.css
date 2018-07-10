@@ -26,12 +26,24 @@
     padding-top: 4%;
 }
 
+#username-login {
+    background-color: lightgoldenrodyellow;
+}
+
+#password-login {
+    background-color: lightgoldenrodyellow;
+}
+
 #register {
     padding-top: 4%;
 }
 
 #client {
     cursor: pointer;
+}
+
+#today-select {
+
 }
 
 #sex-select {

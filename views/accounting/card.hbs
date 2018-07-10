@@ -1,132 +1,145 @@
-{{> header}}
-
-<div class="container" id="card">
-    <div class="col-lg-8 col-lg-offset-2">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <strong>Welcome: {{formatName trainer}}</strong>
-            </div>
-            <div class="panel-body">
-                <div class="row">
-                    <form action="#/card" method="post">
-                        <div class="col-sm-12" id="add-card-form">
-                            <div class="row">
-                                <div class="col-sm-8 form-group">
-                                    <label>Clients</label>
-                                    <div class="dropdown">
-                                        <div class="input-group">
+<div class="container-fluid" id="accounting">
+    <h2 class="trainer">{{formatName trainer}}</h2>
+    {{> header}}
+    <div class="container" id="card">
+        <div class="col-lg-8 col-lg-offset-2">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <strong>Welcome: {{formatName trainer}}</strong>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <form action="#/card" method="post">
+                            <div class="col-sm-12" id="add-card-form">
+                                <div class="row">
+                                    <div class="col-sm-8 form-group">
+                                        <label>Clients</label>
+                                        <div class="dropdown">
+                                            <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="fa fa-users" aria-hidden="true"></i>
                                             </span>
-                                            <label for="client-card"></label>
-                                            <select onchange="calcPrice()" class="form-control" id="client-card"
-                                                    name="client-card">
-                                                <option value="client" class="default-search" selected>Client:</option>
-                                                {{#each clients}}
-                                                    <option value="{{_id}}">{{name}}</option>
-                                                {{/each}}
-                                            </select>
+                                                <label for="client-card"></label>
+                                                <select onchange="calcPrice()" class="form-control" id="client-card"
+                                                        name="client-card">
+                                                    <option value="client" class="default-search" selected>Client:
+                                                    </option>
+                                                    {{#each clients}}
+                                                        <option value="{{_id}}">{{name}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Times per week</label>
-                                    <div class="dropdown">
-                                        <div class="input-group">
+                                    <div class="col-sm-4 form-group">
+                                        <label>Times per week</label>
+                                        <div class="dropdown">
+                                            <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
-                                            <label for="qty"></label>
-                                            <select onchange="calcPrice()" class="form-control" name="qty" id="qty">
-                                                <option value="0.5">1</option>
-                                                <option value="1" selected>2</option>
-                                                <option value="1.33">3</option>
-                                                <option value="1.58">4</option>
-                                            </select>
+                                                <label for="qty"></label>
+                                                <select onchange="calcPrice()" class="form-control" name="qty" id="qty">
+                                                    <option value="0.5">1</option>
+                                                    <option value="1" selected>2</option>
+                                                    <option value="1.33">3</option>
+                                                    <option value="1.58">4</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 form-group">
-                                    <label>Zone</label>
-                                    <div class="dropdown">
-                                        <div class="input-group">
+                                <div class="row">
+                                    <div class="col-sm-4 form-group">
+                                        <label>Zone</label>
+                                        <div class="dropdown">
+                                            <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
-                                            <label for="zone"></label>
-                                            <select onchange="calcPrice()" class="form-control" name="zone" id="zone">
-                                                <option value="1" selected>1</option>
-                                                <option value="0.75">2</option>
-                                                <option value="0.875">3</option>
-                                            </select>
+                                                <label for="zone"></label>
+                                                <select onchange="calcPrice()" class="form-control" name="zone"
+                                                        id="zone">
+                                                    <option value="1" selected>1</option>
+                                                    <option value="0.75">2</option>
+                                                    <option value="0.875">3</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Price</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-piggy-bank"></i></span>
-                                        <input type="text" placeholder="Price" class="form-control" id="price" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Payment</label>
-                                    <div class="dropdown">
+                                    <div class="col-sm-4 form-group">
+                                        <label>Price</label>
                                         <div class="input-group">
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-piggy-bank"></i></span>
+                                            <input type="text" placeholder="Price" class="form-control" id="price"
+                                                   readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <label>Payment</label>
+                                        <div class="dropdown">
+                                            <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-credit-card"></i>
                                             </span>
-                                            <label for="payment"></label>
-                                            <select onchange="calcPrice()" class="form-control" name="payment" id="payment">
-                                                <option value="1" selected>no</option>
-                                                <option value="1">1</option>
-                                                <option value="0.5">1/2</option>
-                                            </select>
+                                                <label for="payment"></label>
+                                                <select onchange="calcPrice()" class="form-control" name="payment"
+                                                        id="payment">
+                                                    <option value="1" selected>no</option>
+                                                    <option value="1">1</option>
+                                                    <option value="0.5">1/2</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-4 form-group">
-                                    <label>Start Date</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        <input onchange="viewController.calcEndDate()" required type="date" class="form-control" id="start-date" name="start-date"/>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>End Date</label>
-                                    <div class="input-group">
-                                        <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                        <input type="text" placeholder="End Date" class="form-control" id="end" readonly>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 form-group">
-                                    <label>Duration</label>
-                                    <div class="dropdown">
+                                <div class="row">
+                                    <div class="col-sm-4 form-group">
+                                        <label>Start Date</label>
                                         <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input onchange="viewController.calcEndDate()" required type="date"
+                                                   class="form-control" id="start-date" name="start-date"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <label>End Date</label>
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" placeholder="End Date" class="form-control" id="end"
+                                                   readonly>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 form-group">
+                                        <label>Duration</label>
+                                        <div class="dropdown">
+                                            <div class="input-group">
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
-                                            <label for="duration"></label>
-                                            <select onchange="viewController.calcEndDate()" class="form-control" name="duration" id="duration">
-                                                <option value="35" selected>5 weeks</option>
-                                                <option value="">unlimited</option>
-                                            </select>
+                                                <label for="duration"></label>
+                                                <select onchange="viewController.calcEndDate()" class="form-control"
+                                                        name="duration" id="duration">
+                                                    <option value="35" selected>5 weeks</option>
+                                                    <option value="">unlimited</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
+                                <button type="submit" class="btn btn-success btn-block"><i
+                                        class="glyphicon glyphicon-floppy-save"></i> SAVE
+                                </button>
                             </div>
-                            <button type="submit" class="btn btn-success btn-block"><i
-                                    class="glyphicon glyphicon-floppy-save"></i> SAVE
-                            </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
+                    <br>
+                    <a href="javascript:history.back()">
+                        <button type="submit" class="btn btn-light pull-left">Go Back</button>
+                    </a>
                 </div>
             </div>
-            <a href="javascript:history.back()">Go Back</a>
         </div>
     </div>
 </div>
