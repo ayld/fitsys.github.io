@@ -9,6 +9,11 @@ let clientController = (() => {
 
         ctx.isAuth = sessionStorage.getItem('authtoken');
 
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
         userService.getAllTrainers().then((trainers) => {
             for (let index in trainers) {
                 if (trainers.hasOwnProperty(index)) {
@@ -100,6 +105,11 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
         let userId = sessionStorage.getItem('userId');
 
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
         clientService.getTrainerClients(userId).then((clients) => {
             ctx.trainer = sessionStorage.getItem('trainer');
             ctx.clients = clients;
@@ -157,7 +167,6 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
 
         let user;
-
         clientService.getClients().then((clients) => {
             let searchedName = globalInfo.getInputVal(document.getElementById('search'));
             let sex = $('#sex-select').find('option');
@@ -167,14 +176,15 @@ let clientController = (() => {
                 if (clients.hasOwnProperty(index)) {
                     if (searchedName || selectedName) {
                         if (clients[index].name.indexOf(selectedName) > -1) {
-
                             $(sex).each((i, entry) => {
                                 if ($(entry).val() === clients[index].info.sex) {
                                     $('#sex-select').children().eq(i).prop('selected', true);
                                     $('#height-select').val(clients[index].info.height)
                                         .on('change', viewController.displayCard());
-                                    $('#wrist-select').val(clients[index].info.wrist);
-                                    $('#ankle-select').val(clients[index].info.ankle);
+                                    $('#wrist-select').val(clients[index].info.wrist)
+                                        .on('change', lbmController.doLbm());
+                                    $('#ankle-select').val(clients[index].info.ankle)
+                                        .on('change', lbmController.doLbm());
                                     if ($(entry).val() === 'male') {
                                         $('#fat-select').val(9);
                                     } else if ($(entry).val() === 'female') {
@@ -219,6 +229,11 @@ let clientController = (() => {
 
         ctx.isAuth = sessionStorage.getItem('authtoken');
         ctx.trainer = sessionStorage.getItem('trainer');
+
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
 
         let cardId = ctx.params.cardId;
         clientService.getCardById(cardId).then((card) => {
@@ -286,7 +301,7 @@ let clientController = (() => {
         });
     }
 
-    function getClientsCards(ctx) {
+    function getActiveCards(ctx) {
         if (!authService.isAuth()) {
             ctx.redirect('#/home');
             return;
@@ -295,7 +310,12 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
         let userId = sessionStorage.getItem('userId');
 
-        clientService.getClientCard(userId).then((cards) => {
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
+        clientService.getActiveCards(userId).then((cards) => {
             ctx.trainer = sessionStorage.getItem('trainer');
             let total = 0;
             let paid = 0;
@@ -331,10 +351,9 @@ let clientController = (() => {
 
                             clientService.updateCard(cardId, card).then(() => {
                                 ctx.cards = cards;
-                                //location.reload()
+                                location.reload()
                             });
                         }
-
 
                         ctx.cards = cards;
                         ctx.qty = cards[index].qty;
@@ -344,7 +363,8 @@ let clientController = (() => {
                         if (Number(cards[index].payment)) {
                             paid += (Number(cards[index].payment) - 60);
                         }
-
+                        cards[index].dates = cards[index].dates.replace(',', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '');
+                        ctx.dates = cards[index].dates;
                         ctx.workout = cards[index].workout;
                         ctx.paid = paid;
                         ctx.loadPartials({
@@ -369,7 +389,11 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
         let userId = sessionStorage.getItem('userId');
 
-        console.log(ctx.params)
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
         clientService.getTrainerClients(userId).then((clients) => {
             ctx.trainer = sessionStorage.getItem('trainer');
             ctx.clients = clients;
@@ -468,22 +492,28 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
         ctx.trainer = sessionStorage.getItem('trainer');
 
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
         let clientId = ctx.params.clientId;
         clientService.getClientInfoById(clientId).then((client) => {
             client._acl.creator = ctx.params.clientId
             let clientId = sessionStorage.setItem('clientId', client._acl.creator);
-            ctx.client_name = client.name;
-            ctx.sex = client.info.sex;
-            ctx.height = client.info.height;
-            ctx.wrist = client.info.wrist;
-            ctx.ankle = client.info.ankle;
-            ctx.date = client.birth;
-            ctx.phone = client.phone;
-            ctx.email = client.email;
-            ctx.discount = client.discount;
-            ctx.description = client.description;
-            ctx.avatar = client.avatar;
-            ctx.active = client.active;
+            //ctx.client_name = client.name;
+            //ctx.sex = client.info.sex;
+            //ctx.height = client.info.height;
+            //ctx.wrist = client.info.wrist;
+            //ctx.ankle = client.info.ankle;
+            //ctx.date = client.birth;
+            //ctx.phone = client.phone;
+            //ctx.email = client.email;
+            //ctx.discount = client.discount;
+            //ctx.description = client.description;
+            //ctx.avatar = client.avatar;
+            //ctx.active = client.active;
+            ctx.client = client;
 
             userService.getAllTrainers().then((trainers) => {
                 for (let index in trainers) {
@@ -516,7 +546,12 @@ let clientController = (() => {
 
     function updateClientPost(ctx) {
         let clientId = sessionStorage.getItem('clientId');
-        let isActive = document.getElementById('active-edit').checked;
+        let isActive;
+        if(document.getElementById('active-edit').checked === true) {
+            isActive = true
+        } else {
+            isActive = false
+        }
 
         let client = {
             name: document.getElementById('client-name-edit').value.toLowerCase(),
@@ -544,7 +579,7 @@ let clientController = (() => {
         }
     }
 
-    function getInfo(ctx) {
+    function getClientInfo(ctx) {
         if (!authService.isAuth()) {
             ctx.redirect('#/home');
             return;
@@ -558,22 +593,22 @@ let clientController = (() => {
             clientService.getClientInfoById(card.clientId).then((client) => {
                 for (let index in client) {
                     if (client.hasOwnProperty(index)) {
-                        ctx.id = client._id;
-                        ctx.name = client.name;
-                        ctx.sex = client.info.sex;
-                        ctx.height = client.info.height;
-                        ctx.wrist = client.info.wrist;
-                        ctx.ankle = client.info.ankle;
-                        ctx.phone = client.phone;
-                        ctx.email = client.email;
-                        ctx.birth = client.birth;
-                        ctx.description = client.description;
-                        ctx.discount = 100 - (client.discount * 100) + '%';
-                        ctx.ect = notifyService.formatDate(client._kmd.ect);
-                        ctx.lmt = notifyService.formatDate(client._kmd.lmt);
-                        ctx.trainer = client.pt;
-                        ctx.avatar = client.avatar;
-                        console.log(client.avatar)
+                        ctx.client = client
+                        //ctx.id = client._id;
+                        //ctx.name = client.name;
+                        //ctx.sex = client.info.sex;
+                        //ctx.height = client.info.height;
+                        //ctx.wrist = client.info.wrist;
+                        //ctx.ankle = client.info.ankle;
+                        //ctx.phone = client.phone;
+                        //ctx.email = client.email;
+                        //ctx.birth = client.birth;
+                        //ctx.description = client.description;
+                        //ctx.discount = 100 - (client.discount * 100) + '%';
+                        //ctx.ect = notifyService.formatDate(client._kmd.ect);
+                        //ctx.lmt = notifyService.formatDate(client._kmd.lmt);
+                        //ctx.trainer = client.pt;
+                        //ctx.avatar = client.avatar;
                         ctx.dates = card.dates.replace(', ', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
                     }
                 }
@@ -598,8 +633,13 @@ let clientController = (() => {
         ctx.trainer = sessionStorage.getItem('trainer');
         let userId = sessionStorage.getItem('userId');
 
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
         let dates;
-        clientService.getClientCard(userId).then((cards) => {
+        clientService.getActiveCards(userId).then((cards) => {
             for (let index in cards) {
                 if (cards.hasOwnProperty(index)) {
                     let checkboxes = document.querySelectorAll('input[type=checkbox][name=workout]');
@@ -630,7 +670,7 @@ let clientController = (() => {
                                 },
                             };
                             clientService.updateCard(cards[i]._id, card).then(() => {
-                                notifyService.showInfo('Sessions logged.');
+                                notifyService.showInfo('Session/s logged.');
                                 ctx.redirect('#/accounting');
                                 //location.reload();
                             })
@@ -641,7 +681,7 @@ let clientController = (() => {
         })
     }
 
-    function allTrainerClients(ctx) {
+    function getActiveClients(ctx) {
         if (!authService.isAuth()) {
             ctx.redirect('#/home');
             return;
@@ -651,23 +691,28 @@ let clientController = (() => {
         ctx.trainer = sessionStorage.getItem('trainer');
         let userId = sessionStorage.getItem('userId');
 
-        clientService.getAllTrainerClients(userId).then((clients) => {
-            console.log(clients)
-            ctx.clients = clients;
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
+        clientService.getActiveClients(userId).then((clients) => {
             for (let index in clients) {
                 if (clients.hasOwnProperty(index)) {
-                    ctx._id = clients[index]._id;
-                    ctx.name = clients[index].name;
-                    ctx.sex = clients[index].info.sex;
-                    ctx.birth = clients[index].birth;
-                    ctx.phone = clients[index].phone;
-                    ctx.email = clients[index].email;
-                    clients[index].discount = 100 - (clients[index].discount * 100) + '%';
-                    ctx.discount = clients[index].discount;
-                    ctx.ect = notifyService.formatDate(clients[index]._kmd.ect);
-                    ctx.description = clients[index].description;
-                    ctx.count = clients.length;
-
+                    ctx.clients = clients;
+                    //ctx._id = clients[index]._id;
+                    //ctx.name = clients[index].name;
+                    //ctx.sex = clients[index].info.sex;
+                    //ctx.birth = clients[index].birth;
+                    //ctx.phone = clients[index].phone;
+                    //ctx.email = clients[index].email;
+                    //ctx.discount = clients[index].discount;
+                    //ctx.ect = clients[index]._kmd.ect;
+                    //ctx.description = clients[index].description;
+                    //console.log(clients[index].active)
+                    ctx.active = clients[index].active
+                    //ctx.count = clients.length;
+                    ctx.countActive = clients.length;
                 }
             }
 
@@ -680,13 +725,97 @@ let clientController = (() => {
         })
     }
 
+    function getInactiveClients(ctx) {
+        if (!authService.isAuth()) {
+            ctx.redirect('#/home');
+            return;
+        }
+
+        ctx.isAuth = sessionStorage.getItem('authtoken');
+        ctx.trainer = sessionStorage.getItem('trainer');
+        let userId = sessionStorage.getItem('userId');
+
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
+        clientService.getInactiveClients(userId).then((clients) => {
+            for (let index in clients) {
+                if (clients.hasOwnProperty(index)) {
+                    ctx.clients = clients;
+                    //ctx._id = clients[index]._id;
+                    //ctx.name = clients[index].name;
+                    //ctx.sex = clients[index].info.sex;
+                    //ctx.birth = clients[index].birth;
+                    //ctx.phone = clients[index].phone;
+                    //ctx.email = clients[index].email;
+                    //ctx.discount = clients[index].discount;
+                    //ctx.ect = clients[index]._kmd.ect;
+                    //ctx.description = clients[index].description;
+                    //console.log(clients[index].active)
+                    ctx.active = clients[index].active
+                    //ctx.count = clients.length;
+                    ctx.countInactive = clients.length;
+                }
+            }
+
+            ctx.loadPartials({
+                header: './views/basic/header.hbs',
+                footer: './views/basic/footer.hbs',
+            }).then(function () {
+                this.partial('./views/lbmcalc/client/clientInfo/allClients.hbs');
+            });
+        })
+    }
+
+    function getInactiveCards(ctx) {
+        if (!authService.isAuth()) {
+            ctx.redirect('#/home');
+            return;
+        }
+
+        ctx.isAuth = sessionStorage.getItem('authtoken');
+        ctx.trainer = sessionStorage.getItem('trainer');
+        let userId = sessionStorage.getItem('userId');
+
+        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
+        userService.getRole(roleId).then((role) => {
+            ctx.role = role.name;
+        });
+
+        clientService.getInactiveCards(userId).then((cards) => {
+            for (let index in cards) {
+                if (cards.hasOwnProperty(index)) {
+                    cards = cards.sort(function (a, b) {
+                        if(a.client_name === b.client_name) {
+                            return new Date(b.end) - new Date(a.end)
+                        }
+                    });
+                    ctx.cards = cards;
+                    ctx.count = cards.length;
+                    cards[index].dates = cards[index].dates.replace(', ', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
+                    ctx.dates = cards[index].dates;
+                    index++
+                }
+            }
+
+            ctx.loadPartials({
+                header: './views/basic/header.hbs',
+                footer: './views/basic/footer.hbs',
+            }).then(function () {
+                this.partial('./views/lbmcalc/client/clientInfo/allCards.hbs');
+            });
+        })
+    }
+
     return {
         listAllClients,
         filterClient,
         populateFields,
         registerClientGet,
         registerClientPost,
-        getClientsCards,
+        getActiveCards,
         addClientCardGet,
         addClientCardPost,
         updateCardGet,
@@ -694,8 +823,10 @@ let clientController = (() => {
         deleteCard,
         updateClientGet,
         updateClientPost,
-        getInfo,
+        getClientInfo,
         logSessions,
-        allTrainerClients
+        getActiveClients,
+        getInactiveClients,
+        getInactiveCards
     };
 })();

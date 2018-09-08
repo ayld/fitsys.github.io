@@ -139,7 +139,7 @@ let viewController = (() => {
             let quantity = globalInfo.getSelectedVal(document.getElementById('qty'));
             let zone = globalInfo.getSelectedVal(document.getElementById('zone'));
             let payment = globalInfo.getSelectedVal(document.getElementById('payment'));
-            let price = 185 * quantity * zone * payment * discount;
+            let price = 205 * quantity * zone * payment * discount;
             price = Math.round(price);
             $('#price').val(price);
         });
@@ -176,7 +176,7 @@ let viewController = (() => {
             let quantity = document.getElementById('qty-edit').value;
             let zone = document.getElementById('zone-edit').value;
             let payment = document.getElementById('payment-edit').value;
-            let price = 185 * quantity * zone * payment * discount;
+            let price = 205 * quantity * zone * payment * discount;
             price = Math.round(price);
             $('#price-edit').val(price);
         });
@@ -216,6 +216,6 @@ let viewController = (() => {
         calcPrice,
         calcEndDate,
         calcPriceForEdit,
-        calcEndDateForEdit,
+        calcEndDateForEdit
     };
 })();

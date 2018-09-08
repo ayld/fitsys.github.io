@@ -1,3 +1,7 @@
+body {
+    font-family: "Roboto Slab";
+}
+
 #nav .nav-tabs {
     margin: 0 auto;
     font-weight: bold;
@@ -29,6 +33,10 @@ bootstrap > dist > css > bootstrap.css > bootstrap.min.js > nav-tabs{border-bott
 */
 #nav > ul > li {
 
+}
+
+.btn .btn-info {
+    font-weight: bold;
 }
 
 #today-select {
@@ -96,6 +104,13 @@ bootstrap > dist > css > bootstrap.css > bootstrap.min.js > nav-tabs{border-bott
     -moz-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
     box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
 }
+
+#allCards {
+    -webkit-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+    -moz-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+    box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
+}
+
 
 #clients-cards {
     -webkit-box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
@@ -206,9 +221,17 @@ tfoot {
     box-shadow: 0 16px 28px 0 rgba(0, 0, 0, 0.22), 0 25px 55px 0 rgba(0, 0, 0, 0.21);
 }
 
+.role {
+    text-align: center;
+}
+
 .table tr,.table td {
     height: 10px;
-    text-align: center
+    text-align: center;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
 }
 
 #acc-info {

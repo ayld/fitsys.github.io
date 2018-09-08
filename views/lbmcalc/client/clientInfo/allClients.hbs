@@ -1,6 +1,10 @@
 <div class="container-fluid" id="accounting">
     <h2 class="trainer">{{formatName trainer}}</h2>
+    <span class="role">{{role}}</span>
     {{> header}}
+    <br><br>
+    <a href="#/activeClients" id="active"><button type="button" class="btn btn-default">Active <span class="badge">{{countActive}}</span></button></a>
+    <a href="#/inactiveClients" id="inactive"><button type="button" class="btn btn-default">Inactive <span class="badge">{{countInactive}}</span></button></a>
     <br><br>
     <table class="table table-striped" id="allClients">
         <thead>
@@ -18,22 +22,25 @@
         </thead>
         <tbody>
         {{#each clients}}
+
             <tr>
                 <td>{{formatName name}}</td>
-                <td><a href="#/editClient/{{_id}}" title="Edit client"><i class="glyphicon glyphicon-edit"></i></a></td>
-                <td>{{sex}}</td>
-                <td>{{birth}}</td>
+                <td><a href="#/editClient/{{_id}}" title="Edit client"><i class="glyphicon glyphicon-edit"></i></a>
+                </td>
+                <td>{{toUpperCase info.sex}}</td>
+                <td>{{formatDate birth}}</td>
                 <td>{{phone}}</td>
                 <td>{{email}}</td>
-                <td>{{discount}}</td>
-                <td>{{ect}}</td>
+                <td>{{discount discount}}</td>
+                <td>{{formatDate _kmd.ect}}</td>
                 <td>{{description}}</td>
             </tr>
         {{/each}}
         </tbody>
         <tfoot>
         <tr>
-            <td>Clients: {{count}}</td>
+            <td></td>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>

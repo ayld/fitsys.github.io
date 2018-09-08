@@ -27,8 +27,7 @@ let notifyService = (() => {
         if (Number.isNaN(date.getDate()))
             return '';
         return date.getDate() + '.' + padZeros(date.getMonth() + 1) +
-            '.' + date.getFullYear() + ' ' + date.getHours() + ':' +
-            padZeros(date.getMinutes()) + ':' + padZeros(date.getSeconds());
+            '.' + date.getFullYear();
 
         function padZeros(num) {
             return ('0' + num).slice(-2);

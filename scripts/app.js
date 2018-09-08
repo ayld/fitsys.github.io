@@ -20,10 +20,14 @@ $(() => {
         this.get('#/client', clientController.registerClientGet);
         this.post('#/client', clientController.registerClientPost);
 
+        this.get('#/resetPass', userController.resetPass);
+
         this.get('#/card', clientController.addClientCardGet);
         this.post('#/card', clientController.addClientCardPost);
 
-        this.get('#/accounting', clientController.getClientsCards);
+        this.get('#/inactiveCards', clientController.getInactiveCards);
+
+        this.get('#/accounting', clientController.getActiveCards);
 
         this.get('#/editCard/:cardId', clientController.updateCardGet);
         this.post('#/editCard/:cardId', clientController.updateCardPost);
@@ -33,11 +37,12 @@ $(() => {
         this.get('#/editClient/:clientId', clientController.updateClientGet);
         this.post('#/editClient/:clientId', clientController.updateClientPost);
 
-        this.get('#/clientInfo/:cardId', clientController.getInfo);
+        this.get('#/clientInfo/:cardId', clientController.getClientInfo);
 
         this.get('#/logSessions', clientController.logSessions);
 
-        this.get('#/allClients', clientController.allTrainerClients)
+        this.get('#/activeClients', clientController.getActiveClients);
+        this.get('#/inactiveClients', clientController.getInactiveClients);
 
         this.get('#/filter', function () {
             $('#search').on('input', clientController.filterClient);
@@ -52,7 +57,7 @@ $(() => {
         });
 
         this.get('#/wristLBM', function () {
-            $('#wrist-select').on('change keyup', lbmController.doLbm);
+            $('#wrist-select').on('change', lbmController.doLbm);
         });
 
         this.get('#/ankleLBM', function () {

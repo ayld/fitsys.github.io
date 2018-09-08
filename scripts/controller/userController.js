@@ -2,7 +2,7 @@ let userController = (() => {
     function handleRegisterGet(ctx) {
         ctx.anonymous = true;
         ctx.isAuth = sessionStorage.getItem('authtoken');
-        ctx.trainer = sessionStorage.getItem('trainer')
+        ctx.trainer = sessionStorage.getItem('trainer');
 
         ctx.loadPartials({
             header: './views/basic/header.hbs',
@@ -68,11 +68,27 @@ let userController = (() => {
         }).catch(notifyService.handleError);
     }
 
+    function resetPass(ctx) {
+        if (window.confirm('CONFIRM ACTION!')) {
+            userService.resetPass().then(() => {
+                notifyService.showInfo('Password reset link was sent to your email.')
+                setTimeout(function(){
+                    history.back();
+                }, 3000);
+            })
+        } else {
+            setTimeout(function(){
+                history.back();
+            }, 0);
+        }
+    }
+
     return {
         handleRegisterGet,
         handleRegisterPost,
         handleLoginGet,
         handleLoginPost,
         handleLogout,
+        resetPass
     };
 })();

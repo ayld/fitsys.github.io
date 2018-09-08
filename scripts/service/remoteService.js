@@ -46,5 +46,6 @@ let remoteService = (() => {
         post,
         update,
         remove,
+        makeAuth
     };
 })();

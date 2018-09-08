@@ -7,7 +7,7 @@ function calcPrice() {
         let quantity = globalInfo.getSelectedVal(document.getElementById('qty'));
         let zone = globalInfo.getSelectedVal(document.getElementById('zone'));
         let payment = globalInfo.getSelectedVal(document.getElementById('payment'));
-        let price = 185 * quantity * zone * payment * discount;
+        let price = 205 * quantity * zone * payment * discount;
         price = Math.round(price);
         document.getElementById('price').value = price;
     });

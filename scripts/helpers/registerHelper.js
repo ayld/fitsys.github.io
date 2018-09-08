@@ -32,5 +32,41 @@ Handlebars.registerHelper('used', function (arg1, arg2) {
     } else {
         return res;
     }
-    ;
 });
+
+Handlebars.registerHelper('formatDate', function (dateISO8601) {
+    let date = new Date(dateISO8601);
+    if (Number.isNaN(date.getDate()))
+        return '';
+    return date.getDate() + '.' + padZeros(date.getMonth() + 1) +
+        '.' + date.getFullYear();
+
+    function padZeros(num) {
+        return ('0' + num).slice(-2);
+    }
+});
+
+Handlebars.registerHelper('discount', function(discount) {
+    return 100 - (Number(discount) * 100) + '%'
+});
+
+Handlebars.registerHelper('splitPhone', function (phone) {
+    let number = phone.substring(0, phone.length - 6);
+    for (let i = 4; i < phone.length; i+=2) {
+        number += ' ' + phone[i] + phone[i + 1]
+    }
+    return number;
+});
+
+Handlebars.registerHelper('isTrue', function (active) {
+    if (active === true) {
+        return active = true
+    } else {
+        return active = false
+    }
+});
+
+Handlebars.registerHelper('counter', function (index){
+    return index + 1;
+});
+

@@ -1,0 +1,48 @@
+<div class="container-fluid" id="accounting">
+    <h2 class="trainer">{{formatName trainer}}</h2>
+    <span class="role">{{role}}</span>
+    {{> header}}
+    <br><br>
+    <table class="table table-striped" id="allCards">
+        <thead>
+        <tr>
+            <th>Cards: {{count}}</th>
+            <th>Name</th>
+            <th>Edit</th>
+            <th>Sessions</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Price</th>
+            <th>Duration</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#each cards}}
+            <tr>
+                <td>{{counter @index}}</td>
+                <td>{{formatName client_name}}</td>
+                <td><a href="#/editCard/{{_id}}" title="Edit card"><i class="glyphicon glyphicon-edit"></i></a></td>
+                <td>{{dates}}</td>
+                <td>{{start}}</td>
+                <td>{{end}}</td>
+                <td>{{price}}</td>
+                <td>{{duration}}</td>
+            </tr>
+        {{/each}}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        </tfoot>
+    </table>
+</div>
+
+{{> footer}}

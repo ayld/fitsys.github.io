@@ -4,23 +4,23 @@
             <div class="form-group">
                 <label for="name-info" class="control-label col-sm-0"></label>
                 <div class="form-control-static col-sm-12">
-                    {{#if name}}
-                        <h3 class="text-center">{{formatName name}}</h3>
+                    {{#if client.name}}
+                        <h3 class="text-center">{{formatName client.name}}</h3>
                     {{else}}
-                        <h3 class="text-center">{{name}}</h3>
+                        <h3 class="text-center">Name is missing!</h3>
                     {{/if}}
                 </div>
             </div>
-            <p><img class="client-img" src="{{avatar}}" alt="avatar"/></p>
+            <p><img class="client-img" src="{{client.avatar}}" alt="avatar"/></p>
         </div>
         <div id="well-bottom-info">
             <div class="form-group">
                 <label for="sex-info" class="control-label col-sm-3">Sex:</label>
                 <div class="form-control-static col-sm-9">
-                    {{#if sex}}
-                        <label>{{toUpperCase sex}}</label>
+                    {{#if client.info.sex}}
+                        <label>{{toUpperCase client.info.sex}}</label>
                     {{else}}
-                        <label>{{sex}}</label>
+                        <label>{{client.info.sex}}</label>
                     {{/if}}
                 </div>
                 <label for="card-info" class="control-label col-sm-3">Sessions:</label>
@@ -29,38 +29,38 @@
                 </div>
                 <label for="birth-info" class="control-label col-sm-3">Birthday:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{birth}}</label>
+                    <label>{{formatDate client.birth}}</label>
                 </div>
                 <label for="description-info" class="control-label col-sm-3">Description:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{description}}</label>
+                    <label>{{client.description}}</label>
                 </div>
                 <label for="discount-info" class="control-label col-sm-3">Discount:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{discount}}</label>
+                    <label>{{discount client.discount}}</label>
                 </div>
                 <label for="phone-info" class="control-label col-sm-3">Phone:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{phone}}</label>
+                    <label>{{splitPhone client.phone}}</label>
                 </div>
                 <label for="email-info" class="control-label col-sm-3">Email:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{email}}</label>
+                    <label>{{client.email}}</label>
                 </div>
                 <label for="ect-info" class="control-label col-sm-3">Registered:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{ect}}</label>
+                    <label>{{formatDate client._kmd.ect}}</label>
                 </div>
                 <label for="lmt-info" class="control-label col-sm-3">Last modified:</label>
                 <div class="form-control-static col-sm-9">
-                    <label>{{lmt}}</label>
+                    <label>{{formatDate client._kmd.lmt}}</label>
                 </div>
             </div>
         </div>
     </form>
     <br>
-    <a href="#/accounting">
-        <button type="submit" class="btn btn-warning pull-left">Go Back</button>
+    <a href="javascript:history.back()">
+        <button type="submit" class="btn btn-link pull-left">Go Back</button>
     </a>
 </div>
 

@@ -1,12 +1,13 @@
 <div class="container-fluid" id="accounting">
     <h2 class="trainer">{{formatName trainer}}</h2>
+    <span class="role">{{role}}</span>
     {{> header}}
     <div class="container" id="edit-client">
         <div class="col-lg-8 col-lg-offset-2">
             <h2 class="text-center"></h2>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>Edit {{formatName client_name}}'s personal data</strong>
+                    <strong>Edit {{formatName client.name}}'s personal data</strong>
                 </div>
                 <div class="panel-body">
                     <div class="row">
@@ -20,7 +21,7 @@
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
                                             <input type="text" class="form-control" id="client-name-edit"
-                                                   value="{{formatName client_name}}">
+                                                   value="{{formatName client.name}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-4 form-group">
@@ -29,7 +30,8 @@
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
                                             <label for="sex-edit"></label>
-                                            <input type="text" value="{{toUpperCase sex}}" class="form-control"
+                                            <input type="text" value="{{toUpperCase client.info.sex}}"
+                                                   class="form-control"
                                                    id="sex-edit" name="sex-edit"/>
                                         </div>
                                     </div>
@@ -43,7 +45,7 @@
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
                                                 <label for="height-edit"></label>
-                                                <input type="text" value="{{height}}" class="form-control"
+                                                <input type="text" value="{{client.info.height}}" class="form-control"
                                                        id="height-edit" name="height-edit"/>
                                             </div>
                                         </div>
@@ -55,7 +57,8 @@
                                             <i class="glyphicon glyphicon-option-vertical"></i>
                                         </span>
                                             <label for="wrist-edit"></label>
-                                            <input type="text" value="{{wrist}}" class="form-control" id="wrist-edit"
+                                            <input type="text" value="{{client.info.wrist}}" class="form-control"
+                                                   id="wrist-edit"
                                                    name="wrist-edit"/>
                                         </div>
                                     </div>
@@ -66,7 +69,8 @@
                                             <i class="glyphicon glyphicon-option-vertical"></i>
                                         </span>
                                             <label for="ankle-edit"></label>
-                                            <input type="text" value="{{ankle}}" class="form-control" id="ankle-edit"
+                                            <input type="text" value="{{client.info.ankle}}" class="form-control"
+                                                   id="ankle-edit"
                                                    name="ankle-edit"/>
                                         </div>
                                     </div>
@@ -77,7 +81,8 @@
                                         <label for="date-edit"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            <input type="text" value="{{date}}" class="form-control" id="date-edit"
+                                            <input type="text" value="{{formatDate client.birth}}" class="form-control"
+                                                   id="date-edit"
                                                    name="date-edit"/>
                                         </div>
                                     </div>
@@ -86,7 +91,8 @@
                                         <label for="phone-edit"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                                            <input type="text" value="{{phone}}" class="form-control" id="phone-edit">
+                                            <input type="text" value="{{splitPhone client.phone}}" class="form-control"
+                                                   id="phone-edit">
                                         </div>
                                     </div>
                                 </div>
@@ -96,7 +102,8 @@
                                         <label for="email-edit"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
-                                            <input type="text" value="{{email}}" class="form-control" id="email-edit">
+                                            <input type="text" value="{{client.email}}" class="form-control"
+                                                   id="email-edit">
                                         </div>
                                     </div>
                                     <div class="col-sm-6 form-group">
@@ -126,7 +133,9 @@
                                             </span>
                                                 <label for="discount-edit"></label>
                                                 <select class="form-control" name="discount-edit" id="discount-edit">
-                                                    <option value="1" selected>0</option>
+                                                    <option value="{{client.discount}}" selected>{{discount
+                                                            client.discount}}</option>
+                                                    <option value="1">0%</option>
                                                     <option value="0.95">5%</option>
                                                     <option value="0.9">10%</option>
                                                     <option value="0.85">15%</option>
@@ -139,14 +148,15 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-user"></i></span>
-                                            <input type="text" class="form-control" id="avatar-edit" value="{{avatar}}">
+                                            <input type="text" class="form-control" id="avatar-edit"
+                                                   value="{{client.avatar}}">
                                         </div>
                                     </div>
                                     <div class="col-sm-2 form-group">
                                         <label>Active</label>
                                         <br>
                                         <label>
-                                            <input type="checkbox" id="active-edit" name="active-edit" checked><span
+                                            <input type="checkbox" id="active-edit" name="active-edit"><span
                                                 class="label-text"></span>
                                         </label>
                                     </div>
@@ -154,7 +164,7 @@
                                 <div class="form-group">
                                     <label>Description</label>
                                     <label for="text-edit"></label>
-                                    <textarea id="text-edit" class="form-control">{{description}}</textarea>
+                                    <textarea id="text-edit" class="form-control">{{client.description}}</textarea>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-block"><i
                                         class="glyphicon glyphicon-floppy-save"></i> UPDATE
@@ -164,7 +174,7 @@
                     </div>
                     <br>
                     <a href="#/accounting">
-                        <button type="submit" class="btn btn-light pull-left">Cancel</button>
+                        <button type="submit" class="btn btn-link pull-left">Cancel</button>
                     </a>
                 </div>
             </div>

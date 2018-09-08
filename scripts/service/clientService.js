@@ -17,8 +17,14 @@ let clientService = (() => {
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
 
-    function getAllTrainerClients(userID) {
-        const endpoint = `clients?query={"pt":"${userID}"}&sort={"name": 1}`;
+    function getActiveClients(userId) {
+        const endpoint = `clients?query={"pt":"${userId}","active": "true"}&sort={"name": 1}`;
+
+        return remoteService.get('appdata', endpoint, 'kinvey');
+    }
+
+    function getInactiveClients(userId) {
+        const endpoint = `clients?query={"pt":"${userId}","active": "false"}&sort={"name": 1}`;
 
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
@@ -35,7 +41,7 @@ let clientService = (() => {
         return remoteService.post('appdata', endpoint, 'kinvey', card);
     }
 
-    function getClientCard(userId) {
+    function getActiveCards(userId) {
         const endpoint = `cards?query={"_acl.creator":"${userId}","active": "true"}&sort={"client_name": 1}`;
 
         return remoteService.get('appdata', endpoint, 'kinvey');
@@ -59,8 +65,8 @@ let clientService = (() => {
         return remoteService.update('appdata', endpoint, 'kinvey', client);
     }
 
-    function getAllCards(userId) {
-        const endpoint = 'cards';
+    function getInactiveCards(userId) {
+        const endpoint = `cards?query={"_acl.creator":"${userId}","active": "false"}&sort={"client_name": 1}`;
 
         return remoteService.get('appdata', endpoint, 'kinvey');
     }
@@ -75,14 +81,15 @@ let clientService = (() => {
         getClients,
         addClient,
         getTrainerClients,
-        getAllTrainerClients,
+        getActiveClients,
         getClientInfoById,
         addClientCard,
-        getClientCard,
+        getActiveCards,
         getCardById,
         updateCard,
-        getAllCards,
         deleteCardById,
         updateClient,
+        getInactiveClients,
+        getInactiveCards
     };
 })();

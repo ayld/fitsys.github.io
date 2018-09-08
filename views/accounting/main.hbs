@@ -1,5 +1,6 @@
 <div class="container-fluid" id="accounting">
     <h2 class="trainer">{{formatName trainer}}</h2>
+    <span class="role">{{role}}</span>
     {{> header}}
     <br><br>
     <table class="table table-striped table-responsive" id="clients-cards">
@@ -39,15 +40,15 @@
             {{#each cards}}
                 {{> clientReg}}
             {{else}}
-                No clients in database.
+                <h2>No clients in database.</h2>
             {{/each}}
             </tbody>
             <tfoot>
             <tr>
                 <td>Summary</td>
                 <td>Cards: {{count}}</td>
-                <td><a href="#/allClients"><button type="submit"  class="btn">Clients</button></a></td>
-                <td><a href="#/allCards"><button type="submit"  class="btn">Cards</button></a></td>
+                <td><a href="#/activeClients">Clients</a></td>
+                <td><a href="#/inactiveCards">Cards</a></td>
                 <td>A: {{active}}%</td>
                 <td>Total: {{total}}</td>
                 <td>Wallet: {{paid}}</td>
