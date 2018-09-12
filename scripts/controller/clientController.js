@@ -66,11 +66,15 @@ let clientController = (() => {
             'http://i67.tinypic.com/2iawlf8.jpg', 'http://i67.tinypic.com/20zagk7.jpg',
             'http://i68.tinypic.com/2zekoir.jpg', 'http://i64.tinypic.com/35jjdvn.jpg',
             'http://i68.tinypic.com/34sjdar.jpg', 'http://i64.tinypic.com/t50rcw.jpg',
-        ]
+        ];
         let isActive = document.getElementById('active').checked;
         let client = {
             avatar: () => {
-                return randomAvatar[Math.floor(Math.random() * randomAvatar.length)] || globalInfo.getInputVal(document.getElementById('avatar-reg'))
+                if (globalInfo.getInputVal(document.getElementById('avatar-reg')) === '') {
+                    return randomAvatar[Math.floor(Math.random() * randomAvatar.length)];
+                } else {
+                    return globalInfo.getInputVal(document.getElementById('avatar-reg'));
+                }
             },
             name: globalInfo.getInputVal(document.getElementById('name-reg')).toLowerCase(),
             info: {
@@ -322,6 +326,7 @@ let clientController = (() => {
             let temp = 0;
             let used = 0;
             if (cards.length === 0) {
+                ctx.isEmpty = true;
                 ctx.redirect('#/card');
             } else {
                 ctx.isEmpty = false;
@@ -369,7 +374,7 @@ let clientController = (() => {
                         ctx.paid = paid;
                         ctx.loadPartials({
                             header: './views/basic/header.hbs',
-                            clientReg: './views/accounting/clientReg.hbs',
+                            cards: './views/accounting/cards.hbs',
                             footer: './views/basic/footer.hbs',
                         }).then(function () {
                             this.partial('./views/accounting/main.hbs');
@@ -402,7 +407,7 @@ let clientController = (() => {
                 header: './views/basic/header.hbs',
                 footer: './views/basic/footer.hbs',
             }).then(function () {
-                this.partial('./views/accounting/card.hbs');
+                this.partial('./views/accounting/newCard.hbs');
             });
         });
     }
@@ -501,18 +506,6 @@ let clientController = (() => {
         clientService.getClientInfoById(clientId).then((client) => {
             client._acl.creator = ctx.params.clientId
             let clientId = sessionStorage.setItem('clientId', client._acl.creator);
-            //ctx.client_name = client.name;
-            //ctx.sex = client.info.sex;
-            //ctx.height = client.info.height;
-            //ctx.wrist = client.info.wrist;
-            //ctx.ankle = client.info.ankle;
-            //ctx.date = client.birth;
-            //ctx.phone = client.phone;
-            //ctx.email = client.email;
-            //ctx.discount = client.discount;
-            //ctx.description = client.description;
-            //ctx.avatar = client.avatar;
-            //ctx.active = client.active;
             ctx.client = client;
 
             userService.getAllTrainers().then((trainers) => {
@@ -547,7 +540,7 @@ let clientController = (() => {
     function updateClientPost(ctx) {
         let clientId = sessionStorage.getItem('clientId');
         let isActive;
-        if(document.getElementById('active-edit').checked === true) {
+        if (document.getElementById('active-edit').checked === true) {
             isActive = true
         } else {
             isActive = false
@@ -588,28 +581,13 @@ let clientController = (() => {
         ctx.isAuth = sessionStorage.getItem('authtoken');
         ctx.trainer = sessionStorage.getItem('trainer');
 
-        let cardId = ctx.params.cardId
+        let cardId = ctx.params.cardId;
         clientService.getCardById(cardId).then((card) => {
             clientService.getClientInfoById(card.clientId).then((client) => {
                 for (let index in client) {
                     if (client.hasOwnProperty(index)) {
-                        ctx.client = client
-                        //ctx.id = client._id;
-                        //ctx.name = client.name;
-                        //ctx.sex = client.info.sex;
-                        //ctx.height = client.info.height;
-                        //ctx.wrist = client.info.wrist;
-                        //ctx.ankle = client.info.ankle;
-                        //ctx.phone = client.phone;
-                        //ctx.email = client.email;
-                        //ctx.birth = client.birth;
-                        //ctx.description = client.description;
-                        //ctx.discount = 100 - (client.discount * 100) + '%';
-                        //ctx.ect = notifyService.formatDate(client._kmd.ect);
-                        //ctx.lmt = notifyService.formatDate(client._kmd.lmt);
-                        //ctx.trainer = client.pt;
-                        //ctx.avatar = client.avatar;
-                        ctx.dates = card.dates.replace(', ', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
+                        ctx.client = client;
+                        ctx.dates = card.dates.replace(',', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
                     }
                 }
 
@@ -700,18 +678,7 @@ let clientController = (() => {
             for (let index in clients) {
                 if (clients.hasOwnProperty(index)) {
                     ctx.clients = clients;
-                    //ctx._id = clients[index]._id;
-                    //ctx.name = clients[index].name;
-                    //ctx.sex = clients[index].info.sex;
-                    //ctx.birth = clients[index].birth;
-                    //ctx.phone = clients[index].phone;
-                    //ctx.email = clients[index].email;
-                    //ctx.discount = clients[index].discount;
-                    //ctx.ect = clients[index]._kmd.ect;
-                    //ctx.description = clients[index].description;
-                    //console.log(clients[index].active)
-                    ctx.active = clients[index].active
-                    //ctx.count = clients.length;
+                    ctx.active = clients[index].active;
                     ctx.countActive = clients.length;
                 }
             }
@@ -744,18 +711,7 @@ let clientController = (() => {
             for (let index in clients) {
                 if (clients.hasOwnProperty(index)) {
                     ctx.clients = clients;
-                    //ctx._id = clients[index]._id;
-                    //ctx.name = clients[index].name;
-                    //ctx.sex = clients[index].info.sex;
-                    //ctx.birth = clients[index].birth;
-                    //ctx.phone = clients[index].phone;
-                    //ctx.email = clients[index].email;
-                    //ctx.discount = clients[index].discount;
-                    //ctx.ect = clients[index]._kmd.ect;
-                    //ctx.description = clients[index].description;
-                    //console.log(clients[index].active)
                     ctx.active = clients[index].active
-                    //ctx.count = clients.length;
                     ctx.countInactive = clients.length;
                 }
             }
@@ -788,15 +744,14 @@ let clientController = (() => {
             for (let index in cards) {
                 if (cards.hasOwnProperty(index)) {
                     cards = cards.sort(function (a, b) {
-                        if(a.client_name === b.client_name) {
+                        if (a.client_name === b.client_name) {
                             return new Date(b.end) - new Date(a.end)
                         }
                     });
                     ctx.cards = cards;
                     ctx.count = cards.length;
-                    cards[index].dates = cards[index].dates.replace(', ', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
+                    cards[index].dates = cards[index].dates.replace(',', '').replace(/[0-9]{4}\-{1}[0-9]{2}\-{1}/gm, '')
                     ctx.dates = cards[index].dates;
-                    index++
                 }
             }
 

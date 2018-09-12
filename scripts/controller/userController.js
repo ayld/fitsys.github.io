@@ -30,7 +30,7 @@ let userController = (() => {
         userService.register(name, username, password, repeatPass).then((userData) => {
             authService.saveSession(userData);
             notifyService.showInfo('User registration successful.');
-            ctx.redirect('#/login');
+            ctx.redirect('#/accounting');
         }).catch(notifyService.handleError);
     }
 

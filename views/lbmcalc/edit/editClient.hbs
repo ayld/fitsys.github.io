@@ -91,7 +91,7 @@
                                         <label for="phone-edit"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                                            <input type="text" value="{{splitPhone client.phone}}" class="form-control"
+                                            <input type="text" value="{{client.phone}}" class="form-control"
                                                    id="phone-edit">
                                         </div>
                                     </div>
@@ -173,8 +173,8 @@
                         </form>
                     </div>
                     <br>
-                    <a href="#/accounting">
-                        <button type="submit" class="btn btn-link pull-left">Cancel</button>
+                    <a href="javascript:history.back()">
+                        <button type="submit" class="btn btn-link pull-left">Go Back</button>
                     </a>
                 </div>
             </div>

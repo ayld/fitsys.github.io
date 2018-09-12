@@ -2,40 +2,47 @@
     <h2 class="trainer">{{formatName trainer}}</h2>
     <span class="role">{{role}}</span>
     {{> header}}
-    <div class="container" id="card-edit">
-        <div class="col-lg-6 col-lg-offset-3">
-            <h2 class="text-center"></h2>
+    <div class="container" id="card">
+        <div class="col-lg-8 col-lg-offset-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <strong>Edit {{formatName client_name}}'s card data</strong>
+                    <strong>Create new membership.</strong>
                 </div>
                 <div class="panel-body">
                     <div class="row">
-                        <form action="#/editCard/:cardId" method="post">
-                            <div class="col-sm-12" id="edit-card-form">
+                        <form action="#/card" method="post">
+                            <div class="col-sm-12" id="add-card-form">
                                 <div class="row">
                                     <div class="col-sm-8 form-group">
-                                        <label>Client</label>
-                                        <label for="name-edit"></label>
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i
-                                                    class="glyphicon glyphicon-user"></i></span>
-                                            <input type="text" class="form-control" id="name-edit"
-                                                   value="{{formatName client_name}}">
+                                        <label>Clients</label>
+                                        <div class="dropdown">
+                                            <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <i class="fa fa-users" aria-hidden="true"></i>
+                                            </span>
+                                                <label for="client-card"></label>
+                                                <select onchange="calcPrice()" class="form-control" id="client-card"
+                                                        name="client-card">
+                                                    <option value="client" class="default-search" selected>Client:
+                                                    </option>
+                                                    {{#each clients}}
+                                                        <option value="{{_id}}">{{name}}</option>
+                                                    {{/each}}
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 form-group">
                                         <label>Times per week</label>
                                         <div class="dropdown">
                                             <div class="input-group">
-                                             <span class="input-group-addon">
+                                            <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
-                                                <label for="qty-edit"></label>
-                                                <select onchange="viewController.calcPriceForEdit()"
-                                                        class="form-control" name="qty-edit" id="qty-edit">
+                                                <label for="qty"></label>
+                                                <select onchange="calcPrice()" class="form-control" name="qty" id="qty">
                                                     <option value="0.5">1</option>
-                                                    <option value="1">2</option>
+                                                    <option value="1" selected>2</option>
                                                     <option value="1.33">3</option>
                                                     <option value="1.58">4</option>
                                                 </select>
@@ -51,10 +58,10 @@
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
-                                                <label for="zone-edit"></label>
-                                                <select onchange="viewController.calcPriceForEdit()"
-                                                        class="form-control" name="zone-edit" id="zone-edit">
-                                                    <option value="1">1</option>
+                                                <label for="zone"></label>
+                                                <select onchange="calcPrice()" class="form-control" name="zone"
+                                                        id="zone">
+                                                    <option value="1" selected>1</option>
                                                     <option value="0.75">2</option>
                                                     <option value="0.875">3</option>
                                                 </select>
@@ -66,8 +73,8 @@
                                         <div class="input-group">
                                             <span class="input-group-addon"><i
                                                     class="glyphicon glyphicon-piggy-bank"></i></span>
-                                            <input type="text" placeholder="Price" class="form-control" id="price-edit"
-                                                   value="{{price}}" readonly>
+                                            <input type="text" placeholder="Price" class="form-control" id="price"
+                                                   readonly>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 form-group">
@@ -77,10 +84,10 @@
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-credit-card"></i>
                                             </span>
-                                                <label for="payment-edit"></label>
-                                                <select onchange="viewController.calcPriceForEdit()"
-                                                        class="form-control" name="payment-edit" id="payment-edit">
-                                                    <option value="1">no</option>
+                                                <label for="payment"></label>
+                                                <select onchange="calcPrice()" class="form-control" name="payment"
+                                                        id="payment">
+                                                    <option value="1" selected>no</option>
                                                     <option value="1">1</option>
                                                     <option value="0.5">1/2</option>
                                                 </select>
@@ -91,20 +98,17 @@
                                 <div class="row">
                                     <div class="col-sm-4 form-group">
                                         <label>Start Date</label>
-                                        <label for="start-date-edit"></label>
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                            <input type="text" value="{{start}}" class="form-control"
-                                                   id="start-date-edit" name="start-date-edit" readonly/>
+                                            <input onchange="viewController.calcEndDate()" required type="date"
+                                                   class="form-control" id="start-date" name="start-date"/>
                                         </div>
                                     </div>
                                     <div class="col-sm-4 form-group">
                                         <label>End Date</label>
-                                        <label for="end-date-edit"></label>
                                         <div class="input-group">
-                                        <span class="input-group-addon"><i
-                                                class="glyphicon glyphicon-calendar"></i></span>
-                                            <input type="text" value="{{end}}" class="form-control" id="end-date-edit"
+                                            <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                            <input type="text" placeholder="End Date" class="form-control" id="end"
                                                    readonly>
                                         </div>
                                     </div>
@@ -115,12 +119,10 @@
                                             <span class="input-group-addon">
                                                 <i class="glyphicon glyphicon-option-vertical"></i>
                                             </span>
-                                                <label for="duration-edit"></label>
-                                                <select onchange="viewController.calcEndDateForEdit()"
-                                                        class="form-control" name="duration-edit" id="duration-edit">
-                                                    <option value="35">5 weeks</option>
-                                                    <option value="42">1 week extended</option>
-                                                    <option value="49">2 weeks extended</option>
+                                                <label for="duration"></label>
+                                                <select onchange="viewController.calcEndDate()" class="form-control"
+                                                        name="duration" id="duration">
+                                                    <option value="35" selected>5 weeks</option>
                                                     <option value="">unlimited</option>
                                                 </select>
                                             </div>
@@ -128,7 +130,7 @@
                                     </div>
                                 </div>
                                 <button type="submit" class="btn btn-success btn-block"><i
-                                        class="glyphicon glyphicon-floppy-save"></i> UPDATE
+                                        class="glyphicon glyphicon-floppy-save"></i> SAVE
                                 </button>
                             </div>
                         </form>

@@ -9,6 +9,7 @@
             <th>Cards: {{count}}</th>
             <th>Name</th>
             <th>Edit</th>
+            <th>Membership</th>
             <th>Sessions</th>
             <th>Start</th>
             <th>End</th>
@@ -22,6 +23,7 @@
                 <td>{{counter @index}}</td>
                 <td>{{formatName client_name}}</td>
                 <td><a href="#/editCard/{{_id}}" title="Edit card"><i class="glyphicon glyphicon-edit"></i></a></td>
+                <td>{{workout}}</td>
                 <td>{{dates}}</td>
                 <td>{{start}}</td>
                 <td>{{end}}</td>
@@ -32,6 +34,7 @@
         </tbody>
         <tfoot>
         <tr>
+            <td></td>
             <td></td>
             <td></td>
             <td></td>
