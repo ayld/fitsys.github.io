@@ -16,18 +16,29 @@ let userController = (() => {
         ctx.anonymous = true;
         ctx.isAuth = sessionStorage.getItem('authtoken');
 
-        let name = ctx.params['name-register'].toLowerCase();
+        let name = ctx.params['name-register'];
         let username = ctx.params['username-register'];
+        let email = ctx.params['email-register'];
         let password = ctx.params['password-register'];
         let repeatPass = ctx.params.repeatPass;
 
-        let regExp = new RegExp(password);
-        if (!regExp.test(repeatPass)) {
+        let emailCheck = /^([a-zA-Z0-9_.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/gm;
+        let passCheck = new RegExp(password);
+        if ((!passCheck.test(repeatPass)) || (password !== repeatPass)) {
             notifyService.showError('Both passwords should match!');
+            return;
+        } else if((name === '') || (name.length < 3)) {
+            notifyService.showError('Name is required and must be at least 3 characters long!');
+            return;
+        } else if((username === '') || (username.length < 3)) {
+            notifyService.showError('Username is required and must be at least 3 characters long!');
+            return;
+        } else if(!emailCheck.test(email)) {
+            notifyService.showError('Please use a valid email address!');
             return;
         }
 
-        userService.register(name, username, password, repeatPass).then((userData) => {
+        userService.register(name, username, email, password, repeatPass).then((userData) => {
             authService.saveSession(userData);
             notifyService.showInfo('User registration successful.');
             ctx.redirect('#/accounting');
@@ -70,8 +81,16 @@ let userController = (() => {
 
     function resetPass(ctx) {
         if (window.confirm('CONFIRM ACTION!')) {
-            userService.resetPass().then(() => {
-                notifyService.showInfo('Password reset link was sent to your email.')
+            let reset = prompt('Enter your email here!');
+            let emailCheck = /^([a-zA-Z0-9_.\-])+@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/gm;
+            document.getElementById('prompt').value = reset;
+            let email = document.getElementById('prompt').value;
+            console.log(email);
+            if(!emailCheck.test(email)) {
+
+            }
+            userService.resetPass(email).then(() => {
+                notifyService.showInfo('Password reset link was sent to your email.');
                 setTimeout(function(){
                     history.back();
                 }, 3000);

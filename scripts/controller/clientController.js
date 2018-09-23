@@ -647,11 +647,13 @@ let clientController = (() => {
                                     }
                                 },
                             };
-                            clientService.updateCard(cards[i]._id, card).then(() => {
-                                notifyService.showInfo('Session/s logged.');
-                                ctx.redirect('#/accounting');
-                                //location.reload();
-                            })
+                            //if (window.confirm('CONFIRM ACTION!')) {
+                                clientService.updateCard(cards[i]._id, card).then(() => {
+                                    notifyService.showInfo('Session/s logged.');
+                                    ctx.redirect('#/accounting');
+                                    //location.reload();
+                                })
+                            //}
                         }
                     }
                 }
@@ -735,10 +737,23 @@ let clientController = (() => {
         ctx.trainer = sessionStorage.getItem('trainer');
         let userId = sessionStorage.getItem('userId');
 
-        let roleId = '64c06b6f-2a5c-4909-b4f2-882168733077';
-        userService.getRole(roleId).then((role) => {
-            ctx.role = role.name;
-        });
+        userService.getRoles().then((roles) => {
+            console.log(roles)
+            let roleId;
+            for(let index in roles) {
+                if (roles.hasOwnProperty(index)) {
+                    if(roles[index].name !== 'admin') {
+                        roleId = roles[1]._id;
+                    } else {
+                        roleId = roles[0]._id;
+                    }
+                    userService.getRole(roleId).then((role) => {
+                        console.log(role)
+                        ctx.role = role.name;
+                    });
+                }
+            }
+        })
 
         clientService.getInactiveCards(userId).then((cards) => {
             for (let index in cards) {
